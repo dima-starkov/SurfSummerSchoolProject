@@ -6,16 +6,34 @@
 //
 
 import Foundation
+import UIKit
 
 final class MainCollectionViewCellModel{
     
+    //MARK: - Events
+
+    var didItemsUpdate: (()->Void)?
+    
+    //MARK: - Properties
+    
+    var items: [ItemModel] = []
+    
+    //MARK: - Methods
+    func getDefaultPosts() {
+        items = Array(repeating: ItemModel.createDefault(), count: 20)
+        didItemsUpdate?()
+    }
     
 }
 
 struct ItemModel {
-    let name: String
-    let image: String
-    let description: String
-    let date: String
-    let isFavourite: Bool
+    let title: String
+    let image: UIImage?
+    let dateCreation: String
+    let content: String
+    let isFavorite: Bool
+    
+    static func createDefault()->ItemModel {
+        .init(title: "Самый милый корги", image: UIImage(named: "korgi-default"), dateCreation: "", content: "Для бариста и посетителей кофеен специальные кружки для кофе — это ещё один способ проконтролировать вкус напитка и приготовить его именно так, как нравится вам.Теперь, кроме регулировки экстракции, настройки помола, времени заваривания и многого что помогает выделять нужные характеристики кофе, вы сможете выбрать и кружку для кофе в зависимости от сорта", isFavorite: false)
+    }
 }
