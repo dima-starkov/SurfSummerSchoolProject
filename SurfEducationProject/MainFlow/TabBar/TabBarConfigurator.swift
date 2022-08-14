@@ -25,6 +25,7 @@ private extension TabBarConfigurator {
         tabBarController.tabBar.unselectedItemTintColor = .lightGray
         tabBarController.tabBar.backgroundColor = .white
         tabBarController.viewControllers = getControllers()
+       
         return tabBarController
     }
     
@@ -32,9 +33,10 @@ private extension TabBarConfigurator {
         var controllers: [UIViewController] = []
         allTabs.forEach { tab in
             let controller = getCurrentViewController(tab: tab)
+            let navVC = UINavigationController(rootViewController: controller)
             let tabBarItem = UITabBarItem(title: tab.title, image: tab.image, selectedImage: tab.selectedImage)
             controller.tabBarItem = tabBarItem
-            controllers.append(controller)
+            controllers.append(navVC)
         }
         return controllers
     }

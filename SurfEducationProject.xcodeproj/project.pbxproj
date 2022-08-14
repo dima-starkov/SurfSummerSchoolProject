@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6AAF561728A7AD9F00C82751 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AAF561528A7AD9F00C82751 /* SearchViewController.swift */; };
+		6AAF561828A7AD9F00C82751 /* SearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6AAF561628A7AD9F00C82751 /* SearchViewController.xib */; };
 		6AC7F911289AF6390034745B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC7F910289AF6390034745B /* AppDelegate.swift */; };
-		6AC7F915289AF6390034745B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC7F914289AF6390034745B /* ViewController.swift */; };
 		6AC7F918289AF6390034745B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6AC7F916289AF6390034745B /* Main.storyboard */; };
 		6AC7F91A289AF63B0034745B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6AC7F919289AF63B0034745B /* Assets.xcassets */; };
 		6AC7F91D289AF63B0034745B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6AC7F91B289AF63B0034745B /* LaunchScreen.storyboard */; };
@@ -20,12 +21,14 @@
 		6AC7F934289E98850034745B /* FavouriteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6AC7F932289E98850034745B /* FavouriteViewController.xib */; };
 		6AC7F937289E989B0034745B /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC7F935289E989B0034745B /* ProfileViewController.swift */; };
 		6AC7F938289E989B0034745B /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6AC7F936289E989B0034745B /* ProfileViewController.xib */; };
+		6AC7F93A289EC69C0034745B /* MainCollectionViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC7F939289EC69C0034745B /* MainCollectionViewCellModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6AAF561528A7AD9F00C82751 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		6AAF561628A7AD9F00C82751 /* SearchViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchViewController.xib; sourceTree = "<group>"; };
 		6AC7F90D289AF6390034745B /* SurfEducationProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SurfEducationProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6AC7F910289AF6390034745B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		6AC7F914289AF6390034745B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		6AC7F917289AF6390034745B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6AC7F919289AF63B0034745B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6AC7F91C289AF63B0034745B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -38,6 +41,7 @@
 		6AC7F932289E98850034745B /* FavouriteViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FavouriteViewController.xib; sourceTree = "<group>"; };
 		6AC7F935289E989B0034745B /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		6AC7F936289E989B0034745B /* ProfileViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
+		6AC7F939289EC69C0034745B /* MainCollectionViewCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCollectionViewCellModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +55,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6AAF561428A7AD8300C82751 /* SearchViewController */ = {
+			isa = PBXGroup;
+			children = (
+				6AAF561528A7AD9F00C82751 /* SearchViewController.swift */,
+				6AAF561628A7AD9F00C82751 /* SearchViewController.xib */,
+			);
+			path = SearchViewController;
+			sourceTree = "<group>";
+		};
 		6AC7F904289AF6380034745B = {
 			isa = PBXGroup;
 			children = (
@@ -72,7 +85,6 @@
 			children = (
 				6AC7F924289C524D0034745B /* MainFlow */,
 				6AC7F910289AF6390034745B /* AppDelegate.swift */,
-				6AC7F914289AF6390034745B /* ViewController.swift */,
 				6AC7F916289AF6390034745B /* Main.storyboard */,
 				6AC7F919289AF63B0034745B /* Assets.xcassets */,
 				6AC7F91B289AF63B0034745B /* LaunchScreen.storyboard */,
@@ -84,6 +96,7 @@
 		6AC7F924289C524D0034745B /* MainFlow */ = {
 			isa = PBXGroup;
 			children = (
+				6AAF561428A7AD8300C82751 /* SearchViewController */,
 				6AC7F928289C52AC0034745B /* TabBar */,
 				6AC7F927289C52820034745B /* ProfileModule */,
 				6AC7F926289C52670034745B /* FavouriteModule */,
@@ -97,6 +110,7 @@
 			children = (
 				6AC7F92D289E98760034745B /* MainViewController.swift */,
 				6AC7F92E289E98760034745B /* MainViewController.xib */,
+				6AC7F939289EC69C0034745B /* MainCollectionViewCellModel.swift */,
 			);
 			path = MainModule;
 			sourceTree = "<group>";
@@ -192,6 +206,7 @@
 				6AC7F918289AF6390034745B /* Main.storyboard in Resources */,
 				6AC7F930289E98760034745B /* MainViewController.xib in Resources */,
 				6AC7F934289E98850034745B /* FavouriteViewController.xib in Resources */,
+				6AAF561828A7AD9F00C82751 /* SearchViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -202,9 +217,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6AC7F915289AF6390034745B /* ViewController.swift in Sources */,
 				6AC7F92C289E94AE0034745B /* TabBarConfigurator.swift in Sources */,
 				6AC7F92A289C52CE0034745B /* TabBarModel.swift in Sources */,
+				6AAF561728A7AD9F00C82751 /* SearchViewController.swift in Sources */,
+				6AC7F93A289EC69C0034745B /* MainCollectionViewCellModel.swift in Sources */,
 				6AC7F92F289E98760034745B /* MainViewController.swift in Sources */,
 				6AC7F933289E98850034745B /* FavouriteViewController.swift in Sources */,
 				6AC7F911289AF6390034745B /* AppDelegate.swift in Sources */,

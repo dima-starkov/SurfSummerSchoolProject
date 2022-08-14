@@ -11,13 +11,9 @@ class FavouriteViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        view.backgroundColor = .cyan
+        title = "Избранное"
     }
 
 
-    @IBAction func searchButtonTapped(_ sender: UIBarButtonItem) {
-        
-        print("Find")
-    }
+   
 }
