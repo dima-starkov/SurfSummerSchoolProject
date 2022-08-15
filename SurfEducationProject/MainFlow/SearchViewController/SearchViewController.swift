@@ -21,7 +21,7 @@ class SearchViewController: UIViewController {
  private extension SearchViewController {
     
     func configureSearchBar() {
-        let backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"),
+        let backButton = UIBarButtonItem(image: UIImage(systemName: "arrow.backward"),
                                                 style: .plain,
                                                 target: navigationController,
                                                 action: #selector(self.navigationController?.popToRootViewController(animated:)))

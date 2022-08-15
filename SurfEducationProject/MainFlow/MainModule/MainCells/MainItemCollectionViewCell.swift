@@ -26,9 +26,11 @@ class MainItemCollectionViewCell: UICollectionViewCell {
         if isFavorite {
             favoriteButton.setImage(UIImage(systemName: "heart"), for: .normal)
             isFavorite = false
+            favoriteButton.flashAnimation()
         } else {
             favoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
             isFavorite = true
+            favoriteButton.flashAnimation()
         }
     }
     
@@ -40,7 +42,7 @@ class MainItemCollectionViewCell: UICollectionViewCell {
         
     }
     
-    func confugure(with model: ItemModel) {
+    func confugure(with model: DetailItemModel) {
         titleLabel.text = model.title
         if model.image != nil {
             imageView.image = model.image
@@ -60,12 +62,11 @@ class MainItemCollectionViewCell: UICollectionViewCell {
 private extension MainItemCollectionViewCell {
     func configureAppearance() {
         titleLabel.textColor = .black
-        titleLabel.font = .systemFont(ofSize: 12)
+        titleLabel.font = .systemFont(ofSize: 16,weight: .medium)
         
         favoriteButton.tintColor = .white
         
         imageView.layer.cornerRadius = 12
     }
 }
-
 

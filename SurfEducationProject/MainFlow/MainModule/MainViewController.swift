@@ -20,6 +20,9 @@ final class MainViewController: UIViewController {
     //MARK: - Properties
     
     var model: MainCollectionViewCellModel = .init()
+    
+    //MARK: - Views
+    
     @IBOutlet weak var collectionView: UICollectionView!
     
     override func viewDidLoad() {
@@ -66,6 +69,8 @@ private extension MainViewController {
 
 extension MainViewController: UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout {
     
+    //MARK: - collectionView delegate
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return model.items.count
     }
@@ -77,6 +82,15 @@ extension MainViewController: UICollectionViewDataSource,UICollectionViewDelegat
         cell.confugure(with: itemModel)
         return cell
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = DetailViewController()
+        vc.model = model.items[indexPath.row]
+        vc.modalPresentationStyle = .fullScreen
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    //MARK: - collectionView layout
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
            let itemWidth = (view.frame.width - Constants.collectionViewPadding * 2 - Constants.hSpaceBetweenItems) / 2
