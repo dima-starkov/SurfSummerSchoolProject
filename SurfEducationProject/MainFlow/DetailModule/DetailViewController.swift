@@ -1,20 +1,13 @@
 //
-//  FavouriteViewController.swift
+//  DetailViewController.swift
 //  SurfEducationProject
 //
-//  Created by Дмитрий Старков on 06.08.2022.
+//  Created by Дмитрий Старков on 14.08.2022.
 //
 
 import UIKit
 
-class FavouriteViewController: UIViewController {
-    
-    private enum cellType {
-        case image
-        case title
-        case content
-        
-    }
+class DetailViewController: UIViewController {
     
     //MARK: - Views
     
@@ -22,30 +15,26 @@ class FavouriteViewController: UIViewController {
     
     //MARK: - Properties
     
-    var model: DetailItemDataModel = .init()
-    
-    
-    //MARK: - UIViewController
+    var model: DetailItemModel?
 
+    //MARK: - UIViewController
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        model.getDefaultPosts()
-        confugureModel()
+        configureAppearance()
+        tableView.reloadData()
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        configureAppearance()
-        configureNavigationBar()
-        
+        configureNavigationController()
     }
-   
+
 }
 
 //MARK: - Private methods
 
-private extension FavouriteViewController {
-    
+private extension DetailViewController {
     func configureAppearance() {
         confugureTableView()
     }
@@ -66,52 +55,54 @@ private extension FavouriteViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
-        tableView.register(UINib(nibName: "\(FavoriteImageTableViewCell.self)", bundle: .main),
-                           forCellReuseIdentifier: "\(FavoriteImageTableViewCell.self)")
+        tableView.register(UINib(nibName: "\(DetailImageTableViewCell.self)", bundle: .main),
+                           forCellReuseIdentifier: "\(DetailImageTableViewCell.self)")
         tableView.register(UINib(nibName: "\(DetailTitleTableViewCell.self)", bundle: .main),
                            forCellReuseIdentifier: "\(DetailTitleTableViewCell.self)")
-        tableView.register(UINib(nibName: "\(FavoriteDetailTextTableViewCell.self)", bundle: .main),
-                           forCellReuseIdentifier: "\(FavoriteDetailTextTableViewCell.self)")
+        tableView.register(UINib(nibName: "\(DetailTextTableViewCell.self)", bundle: .main),
+                           forCellReuseIdentifier: "\(DetailTextTableViewCell.self)")
     }
-    
-    
-    
-    func configureNavigationBar() {
-        navigationItem.title = "Избранное"
+    func configureNavigationController() {
+        navigationItem.title = model?.title
+        
+        let backButton = UIBarButtonItem(image: UIImage(systemName: "arrow.backward"),
+                                                style: .plain,
+                                                target: navigationController,
+                                                action: #selector(self.navigationController?.popToRootViewController(animated:)))
+        backButton.tintColor = .black
+        navigationItem.leftBarButtonItem = backButton
+        
         let searchButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(didTapSearchButton))
         searchButton.tintColor = .black
         navigationItem.rightBarButtonItem = searchButton
+        
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
     
-    @objc private func didTapSearchButton() {
+    @objc func didTapSearchButton() {
         let vc = SearchViewController()
         vc.modalPresentationStyle = .fullScreen
         navigationController?.pushViewController(vc, animated: true)
     }
-    
-    func confugureModel() {
-        model.didItemsUpdate = { [weak self] in
-            guard let self = self else { return }
-            self.tableView.reloadData()
-        }
-    }
 }
 
-//MARK: -UITableView
+//MARK: - TableView delegate
 
-extension FavouriteViewController: UITableViewDelegate,UITableViewDataSource {
+extension DetailViewController: UITableViewDelegate,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return model.items.count * 3
+        return 3
     }
     
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let model = model.items[indexPath.row]
-        switch indexPath.row % 3 {
+        guard let model = model else { return UITableViewCell() }
+        
+        switch indexPath.row {
         case 0:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "\(FavoriteImageTableViewCell.self)")
-            if let cell = cell as? FavoriteImageTableViewCell {
-                cell.configure(with: model)
+            let cell = tableView.dequeueReusableCell(withIdentifier: "\(DetailImageTableViewCell.self)")
+            if let cell = cell as? DetailImageTableViewCell {
+                cell.cofigure(with: model)
                 return cell
             }
            
@@ -123,8 +114,8 @@ extension FavouriteViewController: UITableViewDelegate,UITableViewDataSource {
             }
             
         case 2:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "\(FavoriteDetailTextTableViewCell.self)")
-            if let cell = cell as? FavoriteDetailTextTableViewCell {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "\(DetailTextTableViewCell.self)")
+            if let cell = cell as? DetailTextTableViewCell {
                 cell.configure(with: model)
                 return cell
             }
@@ -136,5 +127,9 @@ extension FavouriteViewController: UITableViewDelegate,UITableViewDataSource {
         return UITableViewCell()
     }
     
+    
+}
+
+extension DetailViewController: UIGestureRecognizerDelegate {
     
 }
