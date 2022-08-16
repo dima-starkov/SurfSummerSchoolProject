@@ -14,13 +14,17 @@ class DetailImageTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        selectionStyle = .none
-        DetailImage.layer.cornerRadius = 12
-        DetailImage.contentMode = .scaleAspectFill
+        configureAppearance()
     }
     
     func cofigure(with model: DetailItemModel) {
         DetailImage.image = model.image
+    }
+    
+    private func configureAppearance() {
+        selectionStyle = .none
+        DetailImage.layer.cornerRadius = 12
+        DetailImage.contentMode = .scaleAspectFill
     }
     
 }

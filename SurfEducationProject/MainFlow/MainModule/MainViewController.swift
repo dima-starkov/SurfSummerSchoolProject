@@ -19,7 +19,7 @@ final class MainViewController: UIViewController {
 
     //MARK: - Properties
     
-    var model: MainCollectionViewCellModel = .init()
+    var model: DetailItemDataModel = .init()
     
     //MARK: - Views
     
@@ -31,12 +31,16 @@ final class MainViewController: UIViewController {
         configureAppearance()
         confugureModel()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        configureNavigationBar()
+    }
 
 }
 
 private extension MainViewController {
     func configureAppearance() {
-        configureNavigationBar()
         configureCollectionView()
     }
     
@@ -45,13 +49,17 @@ private extension MainViewController {
         let searchButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(didTapSearchButton))
         searchButton.tintColor = .black
         navigationItem.rightBarButtonItem = searchButton
+    
+   
     }
     
-    @objc func didTapSearchButton() {
+    @objc private func didTapSearchButton() {
         let vc = SearchViewController()
         vc.modalPresentationStyle = .fullScreen
         navigationController?.pushViewController(vc, animated: true)
     }
+    
+   
     func configureCollectionView() {
         collectionView.delegate = self
         collectionView.dataSource = self

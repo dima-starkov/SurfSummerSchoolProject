@@ -24,6 +24,11 @@ class DetailViewController: UIViewController {
         configureAppearance()
         tableView.reloadData()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        configureNavigationController()
+    }
 
 }
 
@@ -32,7 +37,6 @@ class DetailViewController: UIViewController {
 private extension DetailViewController {
     func configureAppearance() {
         confugureTableView()
-        configureNavigationController()
     }
     
     func confugureTableView() {
@@ -60,12 +64,25 @@ private extension DetailViewController {
     }
     func configureNavigationController() {
         navigationItem.title = model?.title
+        
         let backButton = UIBarButtonItem(image: UIImage(systemName: "arrow.backward"),
                                                 style: .plain,
                                                 target: navigationController,
                                                 action: #selector(self.navigationController?.popToRootViewController(animated:)))
         backButton.tintColor = .black
         navigationItem.leftBarButtonItem = backButton
+        
+        let searchButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(didTapSearchButton))
+        searchButton.tintColor = .black
+        navigationItem.rightBarButtonItem = searchButton
+        
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
+    }
+    
+    @objc func didTapSearchButton() {
+        let vc = SearchViewController()
+        vc.modalPresentationStyle = .fullScreen
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 
@@ -104,11 +121,15 @@ extension DetailViewController: UITableViewDelegate,UITableViewDataSource {
             }
           
         default:
-            return UITableViewCell()
+            fatalError()
         
         }
         return UITableViewCell()
     }
     
+    
+}
+
+extension DetailViewController: UIGestureRecognizerDelegate {
     
 }
