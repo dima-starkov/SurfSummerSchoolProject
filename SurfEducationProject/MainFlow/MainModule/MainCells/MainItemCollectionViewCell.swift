@@ -44,9 +44,8 @@ class MainItemCollectionViewCell: UICollectionViewCell {
     
     func confugure(with model: DetailItemModel) {
         titleLabel.text = model.title
-        if model.image != nil {
-            imageView.image = model.image
-        }
+        guard let loadURL = URL(string: model.imageURL) else { return }
+        imageView.loadImage(from: loadURL)
         if model.isFavorite {
             favoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
             isFavorite = true

@@ -28,7 +28,7 @@ class FavoriteImageTableViewCell: UITableViewCell {
     }
     
     func configure(with model: DetailItemModel) {
-        cartImageView.image = model.image
+//        cartImageView.image = model.image
     }
     
     private func configureAppearance() {

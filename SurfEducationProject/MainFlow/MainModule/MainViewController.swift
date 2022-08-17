@@ -27,9 +27,10 @@ final class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        model.getDefaultPosts()
+        model.loadPosts()
         configureAppearance()
         confugureModel()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -70,7 +71,9 @@ private extension MainViewController {
     func confugureModel() {
         model.didItemsUpdate = { [weak self] in
             guard let self = self else { return }
-            self.collectionView.reloadData()
+            DispatchQueue.main.sync {
+                self.collectionView.reloadData()
+            }
         }
     }
 }

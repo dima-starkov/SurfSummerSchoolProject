@@ -18,7 +18,8 @@ class DetailImageTableViewCell: UITableViewCell {
     }
     
     func cofigure(with model: DetailItemModel) {
-        DetailImage.image = model.image
+        guard let loadURL = URL(string: model.imageURL) else { return }
+        DetailImage.loadImage(from: loadURL)
     }
     
     private func configureAppearance() {

@@ -8,32 +8,28 @@
 import Foundation
 import UIKit
 
-final class DetailItemDataModel{
-    
-    //MARK: - Events
 
-    var didItemsUpdate: (()->Void)?
-    
-    //MARK: - Properties
-    
-    var items: [DetailItemModel] = []
-    
-    //MARK: - Methods
-    func getDefaultPosts() {
-        items = Array(repeating: DetailItemModel.createDefault(), count: 20)
-        didItemsUpdate?()
-    }
-    
-}
 
 struct DetailItemModel {
     let title: String
-    let image: UIImage?
+    let imageURL: String
     let dateCreation: String
     let content: String
     let isFavorite: Bool
     
+    internal init(imageURL: String, title: String, isFavorite: Bool, content: String, dateCreation: Date) {
+            self.imageURL = imageURL
+            self.title = title
+            self.isFavorite = isFavorite
+            self.content = content
+            
+            let formatter = DateFormatter()
+            formatter.dateFormat = "dd.mm.yyyy"
+            
+            self.dateCreation = formatter.string(from: dateCreation)
+        }
+    
     static func createDefault()->DetailItemModel {
-        .init(title: "Самый милый корги", image: UIImage(named: "korgi-default"), dateCreation: "14.08.2022", content: " Для бариста и посетителей кофеен специальные кружки для кофе — это ещё один способ проконтролировать вкус напитка и приготовить его именно так, как нравится вам. \n \n Теперь, кроме регулировки экстракции, настройки помола, времени заваривания и многого что помогает выделять нужные характеристики кофе, вы сможете выбрать и кружку для кофе в зависимости от сорта", isFavorite: false)
+        .init(imageURL: "", title: "Cfvs", isFavorite: false, content: "", dateCreation: Date())
     }
 }
