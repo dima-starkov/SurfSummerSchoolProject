@@ -24,23 +24,45 @@ final class MainViewController: UIViewController {
     //MARK: - Views
     
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
+    let loadErrorView = PostLoadErrorView()
+    
+    //MARK: -UIViewController
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        model.loadPosts()
-        configureAppearance()
-        confugureModel()
-        
+        loadPosts()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        activityIndicator.startAnimating()
         configureNavigationBar()
+        
     }
 
 }
 
 private extension MainViewController {
+    
+    func loadPosts() {
+        model.loadPosts { [weak self] isCompletion in
+            if isCompletion {
+                DispatchQueue.main.async {
+                    self?.confugureModel()
+                    self?.configureAppearance()
+                }
+            } else {
+                DispatchQueue.main.async {
+                self?.activityIndicator.stopAnimating()
+                self?.activityIndicator.isHidden = true
+                self?.presentLoadErrorView()
+                }
+            }
+        }
+    }
+    
     func configureAppearance() {
         configureCollectionView()
     }
@@ -73,7 +95,28 @@ private extension MainViewController {
             guard let self = self else { return }
             DispatchQueue.main.sync {
                 self.collectionView.reloadData()
+                self.activityIndicator.stopAnimating()
+                self.activityIndicator.isHidden = true
             }
+        }
+    }
+
+    func presentLoadErrorView() {
+        collectionView.isHidden = true
+        view.addSubview(loadErrorView)
+        
+        loadErrorView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            loadErrorView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            loadErrorView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            loadErrorView.topAnchor.constraint(equalTo: view.topAnchor),
+            loadErrorView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+        
+        loadErrorView.tryUpdate = { [weak self] in
+            self?.loadErrorView.isHidden = true
+            self?.collectionView.isHidden = false
+            self?.loadPosts()
         }
     }
 }

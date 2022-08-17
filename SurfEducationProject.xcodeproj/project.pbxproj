@@ -51,6 +51,7 @@
 		6AEFDD4728AD5DF000716B4F /* UIImageView + ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEFDD4628AD5DF000716B4F /* UIImageView + ImageLoader.swift */; };
 		6AEFDD4A28AD5E1D00716B4F /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEFDD4928AD5E1D00716B4F /* ImageLoader.swift */; };
 		6AEFDD4C28AD632F00716B4F /* MainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEFDD4B28AD632F00716B4F /* MainModel.swift */; };
+		6AEFDD5028AD733200716B4F /* PostLoadErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEFDD4F28AD733200716B4F /* PostLoadErrorView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -100,6 +101,7 @@
 		6AEFDD4628AD5DF000716B4F /* UIImageView + ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView + ImageLoader.swift"; sourceTree = "<group>"; };
 		6AEFDD4928AD5E1D00716B4F /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		6AEFDD4B28AD632F00716B4F /* MainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModel.swift; sourceTree = "<group>"; };
+		6AEFDD4F28AD733200716B4F /* PostLoadErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostLoadErrorView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -261,6 +263,7 @@
 		6AC7F925289C52580034745B /* MainModule */ = {
 			isa = PBXGroup;
 			children = (
+				6AEFDD5128AD733700716B4F /* PostLoadErrorView */,
 				6A4E8AC328A9574100EE753A /* MainCells */,
 				6AC7F92D289E98760034745B /* MainViewController.swift */,
 				6AC7F92E289E98760034745B /* MainViewController.xib */,
@@ -373,6 +376,14 @@
 			path = ImageLoader;
 			sourceTree = "<group>";
 		};
+		6AEFDD5128AD733700716B4F /* PostLoadErrorView */ = {
+			isa = PBXGroup;
+			children = (
+				6AEFDD4F28AD733200716B4F /* PostLoadErrorView.swift */,
+			);
+			path = PostLoadErrorView;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -483,6 +494,7 @@
 				6A4E8AC628A9577A00EE753A /* MainItemCollectionViewCell.swift in Sources */,
 				6AEFDD3028AC259900716B4F /* HTTPNetworkMethod.swift in Sources */,
 				6AC7F937289E989B0034745B /* ProfileViewController.swift in Sources */,
+				6AEFDD5028AD733200716B4F /* PostLoadErrorView.swift in Sources */,
 				6AEFDD3728AC343300716B4F /* AuthResponseModel.swift in Sources */,
 				6A8C1E0E28A98B2700E735D4 /* UIButton + Animation.swift in Sources */,
 			);
