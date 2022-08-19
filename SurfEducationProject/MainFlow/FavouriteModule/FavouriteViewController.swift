@@ -9,35 +9,28 @@ import UIKit
 
 class FavouriteViewController: UIViewController {
     
-    private enum cellType {
-        case image
-        case title
-        case content
-        
-    }
-    
     //MARK: - Views
     
     let tableView = UITableView()
     
     //MARK: - Properties
     
-    var model: DetailItemDataModel = .init()
-    
+    var model = [DetailItemModel]()
     
     //MARK: - UIViewController
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        model.getDefaultPosts()
-        confugureModel()
+        
+       
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         configureAppearance()
         configureNavigationBar()
-        
+        confugureModel()
+        print(model.count)
     }
    
 }
@@ -90,10 +83,27 @@ private extension FavouriteViewController {
     }
     
     func confugureModel() {
-        model.didItemsUpdate = { [weak self] in
-            guard let self = self else { return }
-            self.tableView.reloadData()
+        model = FavoriteStorage.shared.favoritesItems
+        tableView.reloadData()
+    }
+    
+    func presentAlertToDeleteItem(item: DetailItemModel) {
+        let alert = UIAlertController(title: "Внимание", message: "Вы точно хотите удалить из избранного?", preferredStyle: .alert)
+        
+        let yesAction = UIAlertAction(title: " Да,точно", style: .destructive) {_ in
+            guard let index = self.model.firstIndex(where: {$0.id == item.id}) else { return }
+            self.tableView.beginUpdates()
+            FavoriteStorage.shared.removeItem(item: item)
+            self.model = FavoriteStorage.shared.favoritesItems
+            let indexSet = IndexSet(integer: index)
+            self.tableView.deleteSections(indexSet, with: .automatic)
+            self.tableView.endUpdates()
         }
+        
+        let noAction = UIAlertAction(title: "Нет", style: .cancel)
+        alert.addAction(yesAction)
+        alert.addAction(noAction)
+        present(alert, animated: true)
     }
 }
 
@@ -102,30 +112,40 @@ private extension FavouriteViewController {
 extension FavouriteViewController: UITableViewDelegate,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return model.items.count * 3
+        3
     }
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        model.count
+    }
+    
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let model = model.items[indexPath.row]
+        
+        let itemModel = model[indexPath.section]
+        
         switch indexPath.row % 3 {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "\(FavoriteImageTableViewCell.self)")
             if let cell = cell as? FavoriteImageTableViewCell {
-                cell.configure(with: model)
+                cell.configure(with: itemModel)
+                cell.didTapHeartButton = {
+                    self.presentAlertToDeleteItem(item: itemModel)
+                }
                 return cell
             }
            
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "\(DetailTitleTableViewCell.self)")
             if let cell = cell as? DetailTitleTableViewCell {
-                cell.configure(with: model)
+                cell.configure(with: itemModel)
                 return cell
             }
             
         case 2:
             let cell = tableView.dequeueReusableCell(withIdentifier: "\(FavoriteDetailTextTableViewCell.self)")
             if let cell = cell as? FavoriteDetailTextTableViewCell {
-                cell.configure(with: model)
+                cell.configure(with: itemModel)
                 return cell
             }
           
@@ -134,6 +154,14 @@ extension FavouriteViewController: UITableViewDelegate,UITableViewDataSource {
         
         }
         return UITableViewCell()
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = DetailViewController()
+        vc.model = model[indexPath.section]
+        vc.modalPresentationStyle = .fullScreen
+        navigationController?.pushViewController(vc, animated: true)
+        
     }
     
     

@@ -11,13 +11,16 @@ import UIKit
 
 
 struct DetailItemModel {
+    let id: String
     let title: String
     let imageURL: String
     let dateCreation: String
     let content: String
-    let isFavorite: Bool
+    var isFavorite: Bool
     
-    internal init(imageURL: String, title: String, isFavorite: Bool, content: String, dateCreation: Date) {
+    internal init(imageURL: String, title: String, isFavorite: Bool, content: String, dateCreation: Date,id: String) {
+        
+            self.id = id
             self.imageURL = imageURL
             self.title = title
             self.isFavorite = isFavorite
@@ -30,6 +33,6 @@ struct DetailItemModel {
         }
     
     static func createDefault()->DetailItemModel {
-        .init(imageURL: "", title: "Cfvs", isFavorite: false, content: "", dateCreation: Date())
+        .init(imageURL: "", title: "Cfvs", isFavorite: false, content: "", dateCreation: Date(),id: "11")
     }
 }

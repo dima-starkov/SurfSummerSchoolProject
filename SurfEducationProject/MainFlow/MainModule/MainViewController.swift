@@ -9,17 +9,20 @@ import UIKit
 
 final class MainViewController: UIViewController {
     
-    //MARK: - Connstants
+    //MARK: - Constants
     
     private enum Constants {
         static let collectionViewPadding: CGFloat = 16
         static let hSpaceBetweenItems: CGFloat = 7
         static let vSpaceBetweenItems: CGFloat = 8
     }
+    
+    //MARK: - Events
 
     //MARK: - Properties
     
     var model: DetailItemDataModel = .init()
+    var favoriteStorage = FavoriteStorage.shared
     
     //MARK: - Views
     
@@ -38,8 +41,13 @@ final class MainViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         activityIndicator.startAnimating()
-        configureNavigationBar()
-        
+        configureAppearance()
+        favoriteStorage.itemsRemoved = { [weak self] item in
+            if let index = self?.model.items.firstIndex(where: {$0.title == item.title}) {
+                let indexPath = IndexPath(item: index, section: 0)
+                self?.collectionView.reloadItems(at: [indexPath])
+            }
+        }
     }
 
 }
@@ -51,12 +59,12 @@ private extension MainViewController {
             if isCompletion {
                 DispatchQueue.main.async {
                     self?.confugureModel()
-                    self?.configureAppearance()
+                    self?.collectionView.reloadData()
+                    self?.activityIndicator.stopAnimating()
+                    self?.activityIndicator.isHidden = true
                 }
             } else {
                 DispatchQueue.main.async {
-                self?.activityIndicator.stopAnimating()
-                self?.activityIndicator.isHidden = true
                 self?.presentLoadErrorView()
                 }
             }
@@ -64,6 +72,7 @@ private extension MainViewController {
     }
     
     func configureAppearance() {
+        configureNavigationBar()
         configureCollectionView()
     }
     
@@ -72,8 +81,6 @@ private extension MainViewController {
         let searchButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(didTapSearchButton))
         searchButton.tintColor = .black
         navigationItem.rightBarButtonItem = searchButton
-    
-   
     }
     
     @objc private func didTapSearchButton() {
@@ -104,6 +111,7 @@ private extension MainViewController {
     func presentLoadErrorView() {
         collectionView.isHidden = true
         view.addSubview(loadErrorView)
+        loadErrorView.isHidden = false
         
         loadErrorView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -116,7 +124,10 @@ private extension MainViewController {
         loadErrorView.tryUpdate = { [weak self] in
             self?.loadErrorView.isHidden = true
             self?.collectionView.isHidden = false
+            self?.activityIndicator.startAnimating()
+            self?.activityIndicator.isHidden = false
             self?.loadPosts()
+            
         }
     }
 }

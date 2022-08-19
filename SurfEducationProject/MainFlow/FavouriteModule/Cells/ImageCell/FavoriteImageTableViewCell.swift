@@ -9,6 +9,14 @@ import UIKit
 
 class FavoriteImageTableViewCell: UITableViewCell {
     
+    //MARK: -Properties
+    
+    var item: DetailItemModel?
+    
+    //MARK: -Events
+    
+    var didTapHeartButton: (()->Void)?
+    
     //MARK: -Views
     
     @IBOutlet weak var cartImageView: UIImageView!
@@ -20,21 +28,25 @@ class FavoriteImageTableViewCell: UITableViewCell {
     }
 
     @IBAction private func didTapFavoriteButton(_ sender: UIButton) {
-        let alert = UIAlertController(title: "Внимание", message: "Вы точно хотите удалить из избранного?", preferredStyle: .alert)
-        let yesAction = UIAlertAction(title: "Да, точно", style: .default, handler: nil)
-        let noAction = UIAlertAction(title: "Нет", style: .cancel)
-        alert.addAction(yesAction)
-        alert.addAction(noAction)
+        guard item != nil else {
+            return
+        }
+        didTapHeartButton?()
+        sender.flashAnimation()
     }
     
     func configure(with model: DetailItemModel) {
-//        cartImageView.image = model.image
+        item = model
+        guard let url = URL(string: model.imageURL) else { return }
+        cartImageView.loadImage(from: url)
     }
     
     private func configureAppearance() {
         selectionStyle = .none
         cartImageView.layer.cornerRadius = 12
         cartImageView.contentMode = .scaleAspectFill
+        favoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+        favoriteButton.tintColor = .white
     }
     
 }

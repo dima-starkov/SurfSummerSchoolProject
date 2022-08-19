@@ -16,6 +16,7 @@ final class DetailItemDataModel{
     //MARK: - Properties
     let pictureService = PictureService()
     var items: [DetailItemModel] = []
+    let favoriteStorage = FavoriteStorage.shared
     
     //MARK: - Methods
     func getDefaultPosts() {
@@ -28,8 +29,9 @@ final class DetailItemDataModel{
                 switch result {
                 case .success(let data):
                     self?.items = data.map { item in
-                        DetailItemModel(imageURL: item.photoUrl, title: item.title, isFavorite: false, content: item.content, dateCreation: item.date)
+                        DetailItemModel(imageURL: item.photoUrl, title: item.title, isFavorite: false, content: item.content, dateCreation: item.date,id: item.id)
                     }
+                    self?.toFillFavoriteItems()
                     self?.didItemsUpdate?()
                     isCompletion(true)
                     
@@ -39,4 +41,12 @@ final class DetailItemDataModel{
                 }
             }
         }
+    
+    private func toFillFavoriteItems() {
+        for item in items {
+            if favoriteStorage.isKeyPresentInUserDefaults(key: item.id) {
+                favoriteStorage.favoritesItems.append(item)
+            }
+        }
+    }
 }

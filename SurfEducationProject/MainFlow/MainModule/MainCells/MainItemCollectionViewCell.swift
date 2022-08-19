@@ -11,7 +11,8 @@ class MainItemCollectionViewCell: UICollectionViewCell {
     
     //MARK: - Properties
     
-    var isFavorite: Bool = false
+    var item: DetailItemModel?
+    var favoriteStorage = FavoriteStorage.shared
 
     //MARK: - Views
     
@@ -19,18 +20,21 @@ class MainItemCollectionViewCell: UICollectionViewCell {
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var favoriteButton: UIButton!
     
+    //MARK: - Events
+    
+    
     //MARK: - Actions
     
     @IBAction private func didTapFavoriteButton(_ sender: UIButton) {
-        
-        if isFavorite {
+        guard let item = item else { return }
+        if favoriteStorage.isKeyPresentInUserDefaults(key: item.id) {
             favoriteButton.setImage(UIImage(systemName: "heart"), for: .normal)
-            isFavorite = false
             favoriteButton.flashAnimation()
+            favoriteStorage.removeItem(item: item)
         } else {
             favoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-            isFavorite = true
             favoriteButton.flashAnimation()
+            favoriteStorage.appendItem(item: item)
         }
     }
     
@@ -43,15 +47,14 @@ class MainItemCollectionViewCell: UICollectionViewCell {
     }
     
     func confugure(with model: DetailItemModel) {
+        item = model
         titleLabel.text = model.title
         guard let loadURL = URL(string: model.imageURL) else { return }
         imageView.loadImage(from: loadURL)
-        if model.isFavorite {
+        if favoriteStorage.isKeyPresentInUserDefaults(key: model.id) {
             favoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-            isFavorite = true
         } else {
             favoriteButton.setImage(UIImage(systemName: "heart"), for: .normal)
-            isFavorite = false
         }
     }
 }

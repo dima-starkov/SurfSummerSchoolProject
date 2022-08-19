@@ -22,6 +22,11 @@ struct BaseNetworkTask<AbstractInput:Encodable,AbstractOutput:Decodable>: Networ
     let method: NetworkMethod
     let session: URLSession = URLSession(configuration: .default)
     let isNeedInjectToken: Bool
+    
+    var urlCache: URLCache {
+        .shared
+    }
+    
     var tokenStorage: TokenStorage {
         BaseTokenStorage()
     }
@@ -40,20 +45,30 @@ struct BaseNetworkTask<AbstractInput:Encodable,AbstractOutput:Decodable>: Networ
                         onResponceWasRecived: @escaping (Result<AbstractOutput, Error>) -> Void) {
         do {
             let request = try getRequest(with: input)
+            
+            if let cacheResponse = getCachedResponceFromCache(by: request) {
+                let model = try JSONDecoder().decode(AbstractOutput.self, from: cacheResponse.data)
+                onResponceWasRecived(.success(model))
+                return
+            }
+            
             session.dataTask(with: request) { data, response , error in
-                if let error = error {
-                    onResponceWasRecived(.failure(error))
-                } else if let data = data {
-                    do{
-                        let model = try JSONDecoder().decode(AbstractOutput.self, from: data)
-                        onResponceWasRecived(.success(model))
-                    } catch {
+                guard let data = data,error == nil else {
+                    if let error = error {
                         onResponceWasRecived(.failure(error))
                     }
-                } else {
-                    onResponceWasRecived(.failure(NetworkTaskError.unknownError))
+                    return
+                }
+                
+                do{
+                    let model = try JSONDecoder().decode(AbstractOutput.self, from: data)
+                    onResponceWasRecived(.success(model))
+                    saveResponseToCache(response, cachedData: data, by: request)
+                } catch {
+                    onResponceWasRecived(.failure(error))
                 }
             }.resume()
+            
         } catch {
             onResponceWasRecived(.failure(error))
         }
@@ -64,6 +79,21 @@ struct BaseNetworkTask<AbstractInput:Encodable,AbstractOutput:Decodable>: Networ
 extension BaseNetworkTask where Input == EmptyModel {
     func performRequest(onResponceWasRecived: @escaping (Result<AbstractOutput, Error>) -> Void) {
         performRequest(input: EmptyModel(), onResponceWasRecived: onResponceWasRecived)
+    }
+}
+
+//MARK: - Cache Logic
+
+private extension BaseNetworkTask {
+    
+    func getCachedResponceFromCache(by request: URLRequest) -> CachedURLResponse? {
+        return urlCache.cachedResponse(for: request)
+    }
+    
+    func saveResponseToCache(_ response: URLResponse?, cachedData: Data?,by request: URLRequest) {
+        guard let response = response, let cachedData = cachedData else { return }
+       let cachedURLResponse =  CachedURLResponse(response: response, data: cachedData)
+        urlCache.storeCachedResponse(cachedURLResponse, for: request)
     }
 }
 
