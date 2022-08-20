@@ -21,4 +21,5 @@ struct AuthService {
             onResponceWasRecived(result)
         }
     }
+    
 }

@@ -25,12 +25,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         runLaunchScreen()
         if let tokenContainer = try? tokenContainer.getToken(), !tokenContainer.isExpired {
             self.goToMain()
+            ProfileService.shared.getUserDataFromUserDefaults()
         } else {
             let tempCredentials = AuthRequestModel(phone: "+71234567890", password: "qwerty")
             AuthService().performLoginRequestAndSaveToken(credentials: tempCredentials) { [weak self] result in
                 switch result {
-                case .success:
+                case .success(let result):
                     self?.goToMain()
+                    ProfileService.shared.getUserDataModel(from: result)
                 case .failure:
                     //TODO: - handle error
                     break
