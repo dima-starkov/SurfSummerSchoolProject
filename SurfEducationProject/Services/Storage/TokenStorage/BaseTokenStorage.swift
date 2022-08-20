@@ -77,9 +77,11 @@ struct BaseTokenStorage: TokenStorage {
         
         removeTokenSavingDate()
     }
+    
+    
 }
 
-private extension BaseTokenStorage {
+extension BaseTokenStorage {
     enum Error: Swift.Error {
         case unknownError(status: OSStatus)
         case keyIsAlreadyInKeyChain

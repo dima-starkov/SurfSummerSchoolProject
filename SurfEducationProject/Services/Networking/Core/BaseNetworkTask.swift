@@ -27,9 +27,8 @@ struct BaseNetworkTask<AbstractInput:Encodable,AbstractOutput:Decodable>: Networ
         .shared
     }
     
-    var tokenStorage: TokenStorage {
-        BaseTokenStorage()
-    }
+    var tokenStorage = BaseTokenStorage()
+    
     
     //MARK: -init
     

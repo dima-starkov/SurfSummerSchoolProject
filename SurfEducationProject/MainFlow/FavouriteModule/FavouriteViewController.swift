@@ -30,7 +30,6 @@ class FavouriteViewController: UIViewController {
         configureAppearance()
         configureNavigationBar()
         confugureModel()
-        print(model.count)
     }
    
 }

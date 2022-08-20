@@ -14,6 +14,8 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var exitButton: UIButton!
     
+    let warningView = WarningView(text: "Не удалось выйти, попробуйте еще раз")
+    
 //MARK: - Properties
 
     var userModel: UserModel?
@@ -33,7 +35,21 @@ class ProfileViewController: UIViewController {
 //MARK: -Actions
 
     @IBAction func logOutOfProfile(_ sender: UIButton) {
-        
+        LogOutService().logOut { [weak self] isSuccess in
+            if isSuccess{
+                DispatchQueue.main.async {
+                    let vc = LoginViewController()
+                    vc.modalPresentationStyle = .fullScreen
+                    self?.present(vc, animated: true)
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self?.showWarningView()
+                    self?.hideWarningView()
+                }
+            }
+        }
+       
     }
     
 }
@@ -46,6 +62,7 @@ private extension ProfileViewController {
         configureTableView()
         configureExitButton()
         configureNavigationBar()
+        confugureWarningView()
         userModel = ProfileService.shared.userProfileModel
     }
     
@@ -77,6 +94,33 @@ private extension ProfileViewController {
         let vc = SearchViewController()
         vc.modalPresentationStyle = .fullScreen
         navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func confugureWarningView() {
+        view.addSubview(warningView)
+        view.bringSubviewToFront(warningView)
+        warningView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            warningView.bottomAnchor.constraint(equalTo: view.topAnchor),
+            warningView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            warningView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            warningView.heightAnchor.constraint(equalToConstant: 93)
+        ])
+    }
+    
+    func showWarningView() {
+        UIView.animate(withDuration: 0.7) {
+                self.warningView.center.y += 93
+                self.view.layoutIfNeeded()
+        }
+            }
+    
+    func hideWarningView() {
+        UIView.animate(withDuration: 0.7,delay: 2) {
+                self.warningView.center.y -= 93
+                self.view.layoutIfNeeded()
+            
+        }
     }
     
 }
