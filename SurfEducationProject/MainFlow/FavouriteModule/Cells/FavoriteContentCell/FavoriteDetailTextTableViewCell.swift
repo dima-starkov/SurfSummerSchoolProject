@@ -9,16 +9,21 @@ import UIKit
 
 class FavoriteDetailTextTableViewCell: UITableViewCell {
 
-    //MARK: - Views
+//MARK: - Views
     @IBOutlet private weak var contentText: UILabel!
+    
+//MARK: - UITableViewCell
     
     override func awakeFromNib() {
         super.awakeFromNib()
         selectionStyle = .none
     }
 
+//MARK: - Methods
+    
   func configure(with model: DetailItemModel) {
-        contentText.text = model.content
+      contentText.text = model.content
+      contentText.font = .regular12()
     }
     
     

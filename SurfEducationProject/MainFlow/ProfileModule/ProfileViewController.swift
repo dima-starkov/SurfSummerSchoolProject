@@ -40,6 +40,16 @@ final class ProfileViewController: UIViewController {
 //MARK: -Actions
 
     @IBAction func logOutOfProfile(_ sender: UIButton) {
+       presentAlert()
+    }
+    
+}
+
+//MARK: -Private Methods
+
+private extension ProfileViewController {
+    
+    func logout() {
         LogOutService().logOut { [weak self] isSuccess in
             if isSuccess{
                 DispatchQueue.main.async {
@@ -51,17 +61,12 @@ final class ProfileViewController: UIViewController {
                 DispatchQueue.main.async {
                     self?.showWarningView()
                     self?.hideWarningView()
+                    self?.exitButton.stopLoadAnimation()
+                    self?.exitButton.setTitle("Выйти из профиля", for: .normal)
                 }
             }
         }
-       
     }
-    
-}
-
-//MARK: -Private Methods
-
-private extension ProfileViewController {
     
     func configureAppearance() {
         configureTableView()
@@ -72,7 +77,7 @@ private extension ProfileViewController {
     }
     
     func configureExitButton() {
-        exitButton.backgroundColor = .black
+        exitButton.backgroundColor = .standartBlack()
         exitButton.setTitleColor(.white, for: .normal)
         exitButton.setTitle("Выйти из профиля", for: .normal)
     }
@@ -81,7 +86,7 @@ private extension ProfileViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
-        tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: topbarHeight + 16).isActive = true //переопределил чтобы во время анимации warningView tableView не уезжала вместе с navigationBar
+        tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: topbarHeight + 16).isActive = true //переопределил, чтобы во время анимации warningView tableView не уезжала вместе с navigationBar
         
         tableView.register(UINib(nibName: "\(AvatarAndNameTableViewCell.self)", bundle: .main),
                            forCellReuseIdentifier: "\(AvatarAndNameTableViewCell.self)")
@@ -93,7 +98,7 @@ private extension ProfileViewController {
     func configureNavigationBar() {
         navigationItem.title = "Профиль"
         let searchButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(didTapSearchButton))
-        searchButton.tintColor = .black
+        searchButton.tintColor = .standartBlack()
         navigationItem.rightBarButtonItem = searchButton
     }
     
@@ -101,6 +106,19 @@ private extension ProfileViewController {
         let vc = SearchViewController()
         vc.modalPresentationStyle = .fullScreen
         navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func presentAlert() {
+        let alert = UIAlertController(title: "Внимание", message: "Вы точно хотите выйти из приложения?", preferredStyle: .alert)
+        let outAction = UIAlertAction(title: "Да,точно", style: .default) { [weak self] _ in
+            self?.exitButton.setTitle(nil, for: .normal)
+            self?.exitButton.loadAnimation()
+            self?.logout()
+        }
+        let cancelAction = UIAlertAction(title: "Нет", style: .cancel)
+        alert.addAction(cancelAction)
+        alert.addAction(outAction)
+        present(alert, animated: true)
     }
     
     func confugureWarningView() {
@@ -141,6 +159,7 @@ extension ProfileViewController: UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 4
     }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let userModel = userModel else { return UITableViewCell() }
         switch indexPath.row {

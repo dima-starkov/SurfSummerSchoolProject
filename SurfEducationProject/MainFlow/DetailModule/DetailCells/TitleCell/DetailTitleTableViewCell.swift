@@ -30,8 +30,8 @@ class DetailTitleTableViewCell: UITableViewCell {
     private func configureAppearance() {
         selectionStyle = .none
         
-        cartTitleLabel.font = .systemFont(ofSize: 20, weight: .medium)
-        dateLabel.font = .systemFont(ofSize: 12, weight: .regular)
+        cartTitleLabel.font = .medium16()
+        dateLabel.font = .regular12()
         dateLabel.textColor = .lightGray
     }
     

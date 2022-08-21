@@ -71,7 +71,7 @@ private extension FavouriteViewController {
     func configureNavigationBar() {
         navigationItem.title = "Избранное"
         let searchButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(didTapSearchButton))
-        searchButton.tintColor = .black
+        searchButton.tintColor = .standartBlack()
         navigationItem.rightBarButtonItem = searchButton
     }
     

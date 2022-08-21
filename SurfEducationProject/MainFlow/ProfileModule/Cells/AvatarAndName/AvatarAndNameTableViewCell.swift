@@ -34,11 +34,11 @@ class AvatarAndNameTableViewCell: UITableViewCell {
         avatarImage.contentMode = .scaleAspectFill
         
         descriptionLabel.numberOfLines = 0
-        descriptionLabel.textColor = .gray
-        descriptionLabel.font = .systemFont(ofSize: 12, weight: .light)
+        descriptionLabel.textColor = .grayLight()
+        descriptionLabel.font = .light12()
         
         nameLabel.numberOfLines = 2
-        nameLabel.font = .systemFont(ofSize: 18, weight: .medium)
+        nameLabel.font = .medium18()
         
     }
     

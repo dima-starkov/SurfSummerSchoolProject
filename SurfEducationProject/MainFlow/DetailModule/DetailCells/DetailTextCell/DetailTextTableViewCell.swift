@@ -27,7 +27,7 @@ class DetailTextTableViewCell: UITableViewCell {
     
     private func configureAppearance() {
         selectionStyle = .none
-        contentLabel.font = .systemFont(ofSize: 16, weight: .regular)
+        contentLabel.font = UIFont.regular12()
         contentLabel.textColor = .black
         contentLabel.numberOfLines = 0
         contentLabel.lineBreakMode = .byWordWrapping

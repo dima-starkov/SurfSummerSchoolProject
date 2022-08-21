@@ -40,6 +40,7 @@ class SearchBarIsEmptyView: UIView {
         label.numberOfLines = 0
         label.textAlignment = .center
         label.textColor = .gray
+        label.font = .regular14()
         
         label.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([

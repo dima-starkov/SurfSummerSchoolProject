@@ -80,7 +80,7 @@ private extension MainViewController {
     func configureNavigationBar() {
         navigationItem.title = "Главная"
         let searchButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(didTapSearchButton))
-        searchButton.tintColor = .black
+        searchButton.tintColor = .standartBlack()
         navigationItem.rightBarButtonItem = searchButton
     }
     

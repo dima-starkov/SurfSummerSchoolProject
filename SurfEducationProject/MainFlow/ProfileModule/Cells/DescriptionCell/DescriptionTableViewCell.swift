@@ -22,13 +22,13 @@ class DescriptionTableViewCell: UITableViewCell {
     func configureAppearance() {
         infoTypeLabel.numberOfLines = 1
         infoTypeLabel.textAlignment = .left
-        infoTypeLabel.textColor = .gray
-        infoTypeLabel.font = .systemFont(ofSize: 12, weight: .regular)
+        infoTypeLabel.textColor = .grayLight()
+        infoTypeLabel.font = .regular12()
         
         infoLabel.numberOfLines = 1
         infoLabel.textAlignment = .left
-        infoLabel.textColor = .black
-        infoLabel.font = .systemFont(ofSize: 18, weight: .regular)
+        infoLabel.textColor = .standartBlack()
+        infoLabel.font = .regular18()
         
         selectionStyle = .none
     }

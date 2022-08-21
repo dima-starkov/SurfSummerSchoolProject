@@ -17,11 +17,11 @@ class WarningView: UIView {
 
     convenience init(text: String) {
         self.init()
-        backgroundColor = .red
+        backgroundColor = .warningRed()
         addSubview(label)
         label.text = text
         label.textColor = .white
-        label.font = .systemFont(ofSize: 14, weight: .regular)
+        label.font = .regular14()
         label.textAlignment = .center
         
         label.translatesAutoresizingMaskIntoConstraints = false

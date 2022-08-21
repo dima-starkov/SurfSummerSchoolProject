@@ -40,6 +40,7 @@ class ResultsIsEmptyView: UIView {
         label.numberOfLines = 2
         label.textAlignment = .center
         label.textColor = .gray
+        label.font = .regular14()
         
         label.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([

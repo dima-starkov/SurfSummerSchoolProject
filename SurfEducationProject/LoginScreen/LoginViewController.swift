@@ -10,8 +10,8 @@ import UIKit
 class LoginViewController: UIViewController {
     
 //MARK: -Views
-    let loginTextField = OneLineTextField(font: .systemFont(ofSize: 18, weight: .regular))
-    let passwordTextField = OneLineTextField(font: .systemFont(ofSize: 18, weight: .regular))
+    let loginTextField = OneLineTextField(font: .regular18())
+    let passwordTextField = OneLineTextField(font: .regular18())
     let logInButton = UIButton()
     let showOrHidePasswordButton = UIButton(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
     let isEmptyLogin = UITextField()
@@ -80,17 +80,17 @@ private extension LoginViewController {
         passwordTextField.rightViewMode = .always
         
         showOrHidePasswordButton.setImage(UIImage(systemName: "eye.fill"), for: .normal)
-        showOrHidePasswordButton.tintColor = .lightGray
+        showOrHidePasswordButton.tintColor = .grayLight()
         
         showOrHidePasswordButton.addTarget(self, action: #selector(showPassword), for: .touchUpInside)
         
         isEmptyLogin.text = "Поле не может быть пустым"
-        isEmptyLogin.textColor = .red
-        isEmptyLogin.font = .systemFont(ofSize: 12, weight: .light)
+        isEmptyLogin.textColor = .warningRed()
+        isEmptyLogin.font = .regular12()
         
         isEmptyPassword.text = "Поле не может быть пустым"
-        isEmptyPassword.textColor = .red
-        isEmptyPassword.font = .systemFont(ofSize: 12, weight: .light)
+        isEmptyPassword.textColor = .warningRed()
+        isEmptyPassword.font = .regular12()
         
         isEmptyLogin.isHidden = true
         isEmptyPassword.isHidden = true
@@ -133,7 +133,7 @@ private extension LoginViewController {
     }
     
     func confugureButton() {
-        logInButton.backgroundColor = .black
+        logInButton.backgroundColor = .standartBlack()
         logInButton.setTitleColor(.white, for: .normal)
         logInButton.setTitle("Войти", for: .normal)
         logInButton.addTarget(self, action: #selector(didTapLoginButton), for: .touchUpInside)
@@ -141,7 +141,9 @@ private extension LoginViewController {
     
     @objc func didTapLoginButton() {
         if checkLoginAndPassword() {
-           logIn()
+            logInButton.loadAnimation()
+            logInButton.setTitle(nil, for: .normal)
+            logIn()
         }
     }
     
@@ -161,6 +163,8 @@ private extension LoginViewController {
                 DispatchQueue.main.async {
                     self?.showWarningView()
                     self?.hideWarningView()
+                    self?.logInButton.stopLoadAnimation()
+                    self?.logInButton.setTitle("Войти", for: .normal)
                 }
             }
         }
@@ -172,18 +176,25 @@ private extension LoginViewController {
         
         isEmptyLogin.isHidden = true
         isEmptyPassword.isHidden = true
-        loginTextField.bottomViewColor = .lightGray
-        passwordTextField.bottomViewColor = .lightGray
-
+        loginTextField.bottomViewColor = .grayLight()
+        passwordTextField.bottomViewColor = .grayLight()
+        
+        if login == "" && password == "" {
+            isEmptyLogin.isHidden = false
+            loginTextField.bottomViewColor = .warningRed()
+            isEmptyPassword.isHidden = false
+            passwordTextField.bottomViewColor = .warningRed()
+            return false
+        }
         
         if login == "" {
             isEmptyLogin.isHidden = false
-            loginTextField.bottomViewColor = .red
+            loginTextField.bottomViewColor = .warningRed()
             return false
         }
         if password == "" {
             isEmptyPassword.isHidden = false
-            passwordTextField.bottomViewColor = .red
+            passwordTextField.bottomViewColor = .warningRed()
             return false
         }
         return true

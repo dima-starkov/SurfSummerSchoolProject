@@ -64,10 +64,8 @@ class MainItemCollectionViewCell: UICollectionViewCell {
 private extension MainItemCollectionViewCell {
     func configureAppearance() {
         titleLabel.textColor = .black
-        titleLabel.font = .systemFont(ofSize: 16,weight: .medium)
-        
-        favoriteButton.tintColor = .white
-        
+        titleLabel.font = .medium12()
+        favoriteButton.tintColor = .standartWhite()
         imageView.layer.cornerRadius = 12
     }
 }

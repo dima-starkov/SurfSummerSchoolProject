@@ -20,4 +20,20 @@ extension UIButton {
     layer.add(flash, forKey: nil)
     }
     
+    func loadAnimation() {
+        let image = UIImage(named: "loadingImage")
+        self.setImage(image, for: .normal)
+        let rotation : CABasicAnimation = CABasicAnimation(keyPath: "transform.rotation.z")
+        rotation.toValue = NSNumber(value: Double.pi * 2)
+        rotation.duration = 1
+        rotation.isCumulative = true
+        rotation.repeatCount = Float.greatestFiniteMagnitude
+        self.imageView?.layer.add(rotation, forKey: "rotationAnimation")
+    }
+    
+    func stopLoadAnimation() {
+        self.imageView?.layer.removeAnimation(forKey: "rotationAnimation")
+        self.setImage(nil, for: .normal)
+    }
+    
 }

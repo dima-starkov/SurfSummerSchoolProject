@@ -23,6 +23,8 @@
 		6A9AD7FD28AED312002EBD79 /* FavoriteStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9AD7FC28AED312002EBD79 /* FavoriteStorage.swift */; };
 		6AAF561728A7AD9F00C82751 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AAF561528A7AD9F00C82751 /* SearchViewController.swift */; };
 		6AAF561828A7AD9F00C82751 /* SearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6AAF561628A7AD9F00C82751 /* SearchViewController.xib */; };
+		6AB5185428B2539400DFF084 /* UIFont + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB5185328B2539400DFF084 /* UIFont + Extensions.swift */; };
+		6AB5185628B2671500DFF084 /* UIColor + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB5185528B2671500DFF084 /* UIColor + Extension.swift */; };
 		6AC7F911289AF6390034745B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC7F910289AF6390034745B /* AppDelegate.swift */; };
 		6AC7F91A289AF63B0034745B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6AC7F919289AF63B0034745B /* Assets.xcassets */; };
 		6AC7F91D289AF63B0034745B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6AC7F91B289AF63B0034745B /* LaunchScreen.storyboard */; };
@@ -84,6 +86,8 @@
 		6A9AD7FC28AED312002EBD79 /* FavoriteStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteStorage.swift; sourceTree = "<group>"; };
 		6AAF561528A7AD9F00C82751 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		6AAF561628A7AD9F00C82751 /* SearchViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchViewController.xib; sourceTree = "<group>"; };
+		6AB5185328B2539400DFF084 /* UIFont + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont + Extensions.swift"; sourceTree = "<group>"; };
+		6AB5185528B2671500DFF084 /* UIColor + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor + Extension.swift"; sourceTree = "<group>"; };
 		6AC7F90D289AF6390034745B /* SurfEducationProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SurfEducationProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6AC7F910289AF6390034745B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6AC7F919289AF63B0034745B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -183,6 +187,8 @@
 			children = (
 				6A8C1E0D28A98B2700E735D4 /* UIButton + Animation.swift */,
 				6AEFDD4628AD5DF000716B4F /* UIImageView + ImageLoader.swift */,
+				6AB5185328B2539400DFF084 /* UIFont + Extensions.swift */,
+				6AB5185528B2671500DFF084 /* UIColor + Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -261,6 +267,16 @@
 			path = SearchViewController;
 			sourceTree = "<group>";
 		};
+		6AB5185728B26A3900DFF084 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				6AC7F910289AF6390034745B /* AppDelegate.swift */,
+				6AC7F919289AF63B0034745B /* Assets.xcassets */,
+				6AC7F91B289AF63B0034745B /* LaunchScreen.storyboard */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
 		6AC7F904289AF6380034745B = {
 			isa = PBXGroup;
 			children = (
@@ -280,15 +296,13 @@
 		6AC7F90F289AF6390034745B /* SurfEducationProject */ = {
 			isa = PBXGroup;
 			children = (
+				6AC7F91E289AF63B0034745B /* Info.plist */,
+				6AB5185728B26A3900DFF084 /* Application */,
 				6AFCF11228B1176200851B15 /* LoginScreen */,
 				6AEFDD2628AC1D6E00716B4F /* Services */,
 				6A8C1E1F28AAB5E100E735D4 /* Models */,
 				6AC7F924289C524D0034745B /* MainFlow */,
 				6A4E8ACD28A98ACD00EE753A /* Extensions */,
-				6AC7F910289AF6390034745B /* AppDelegate.swift */,
-				6AC7F919289AF63B0034745B /* Assets.xcassets */,
-				6AC7F91B289AF63B0034745B /* LaunchScreen.storyboard */,
-				6AC7F91E289AF63B0034745B /* Info.plist */,
 			);
 			path = SurfEducationProject;
 			sourceTree = "<group>";
@@ -587,6 +601,7 @@
 				6AFCF10E28B0F97E00851B15 /* ProfileService.swift in Sources */,
 				6AEFDD3C28AC3A5200716B4F /* PictureResponseModel.swift in Sources */,
 				6AEFDD1A28AADE4600716B4F /* FavoriteImageTableViewCell.swift in Sources */,
+				6AB5185628B2671500DFF084 /* UIColor + Extension.swift in Sources */,
 				6AC7F92C289E94AE0034745B /* TabBarConfigurator.swift in Sources */,
 				6AFCF0FD28B0D3C100851B15 /* SearchBarIsEmptyView.swift in Sources */,
 				6AC7F92A289C52CE0034745B /* TabBarModel.swift in Sources */,
@@ -594,6 +609,7 @@
 				6AAF561728A7AD9F00C82751 /* SearchViewController.swift in Sources */,
 				6AC7F93A289EC69C0034745B /* DetailItemModel.swift in Sources */,
 				6AEFDD4728AD5DF000716B4F /* UIImageView + ImageLoader.swift in Sources */,
+				6AB5185428B2539400DFF084 /* UIFont + Extensions.swift in Sources */,
 				6AEFDD3328AC32FE00716B4F /* AuthService.swift in Sources */,
 				6AEFDD3A28AC395000716B4F /* EmptyModel.swift in Sources */,
 				6A8C1E1D28AAADE200E735D4 /* DetailTextTableViewCell.swift in Sources */,

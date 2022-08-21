@@ -76,7 +76,8 @@ class PostLoadErrorView: UIView {
         textLabel.text = "Не удалось загрузить ленту\nОбновите экран или попробуйте позже"
         textLabel.numberOfLines = 2
         textLabel.textAlignment = .center
-        textLabel.textColor = .lightGray
+        textLabel.textColor = .grayLight()
+        textLabel.font = .regular14()
     }
     
     private func configureImage() {

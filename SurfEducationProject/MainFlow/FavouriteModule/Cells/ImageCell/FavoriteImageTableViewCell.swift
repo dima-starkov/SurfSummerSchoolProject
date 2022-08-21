@@ -46,7 +46,7 @@ class FavoriteImageTableViewCell: UITableViewCell {
         cartImageView.layer.cornerRadius = 12
         cartImageView.contentMode = .scaleAspectFill
         favoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-        favoriteButton.tintColor = .white
+        favoriteButton.tintColor = .standartWhite()
     }
     
 }
