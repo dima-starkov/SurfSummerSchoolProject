@@ -9,20 +9,17 @@ import Foundation
 
 class FavoriteStorage {
     
-    //MARK: - Events
+//MARK: - Events
     
     var itemsRemoved: ((DetailItemModel)->Void)?
     
-   //MARK: - Properties
+//MARK: - Properties
     
     static let shared = FavoriteStorage()
-    
     var favoritesItems = [DetailItemModel]()
-    
     var userDefaults = UserDefaults.standard
     
-    
-    //MARK: -Methods
+//MARK: -Methods
     
     func appendItem(item: DetailItemModel) {
         favoritesItems.append(item)
@@ -41,7 +38,7 @@ class FavoriteStorage {
         return UserDefaults.standard.object(forKey: key) != nil
     }
     
-    //MARK: - Private Methods
+//MARK: - Private Methods
     
     private func saveItemToUserDefaults(item: DetailItemModel) {
          userDefaults.set(item.dateCreation, forKey: item.id)

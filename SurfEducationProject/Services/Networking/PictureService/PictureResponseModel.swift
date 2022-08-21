@@ -8,6 +8,8 @@
 import Foundation
 struct PictureResponseModel: Decodable {
     
+//MARK: -Properties
+    
     let id: String
     let title: String
     let content: String
@@ -17,7 +19,7 @@ struct PictureResponseModel: Decodable {
             Date(timeIntervalSince1970: publicationDate / 1000)
         }
 
-        // MARK: - Private Properties
+// MARK: - Private Properties
     
     private let publicationDate: Double
 }

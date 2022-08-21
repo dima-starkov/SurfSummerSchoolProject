@@ -7,9 +7,9 @@
 
 import Foundation
 struct LogOutService {
-    let dataTask = BaseNetworkTask<EmptyModel,EmptyModel>( isNeedInjectToken: true,
-                                                                        method: .post,
-                                                                        path: "/auth/logout")
+    let dataTask = BaseNetworkTask<EmptyModel,EmptyModel>( isNeedInjectToken: false,  
+                                                           method: .post,
+                                                           path: "/auth/logout")
     func logOut(completion: @escaping (Bool)-> Void) {
         dataTask.performRequest { result in
             switch result {
@@ -17,6 +17,7 @@ struct LogOutService {
                 do {
                     try dataTask.tokenStorage.removeTokenFromContainer()
                     URLCache.shared.removeAllCachedResponses()
+                    ProfileService.shared.removeUserData()
                     completion(true)
                 } catch {
                     print(error)

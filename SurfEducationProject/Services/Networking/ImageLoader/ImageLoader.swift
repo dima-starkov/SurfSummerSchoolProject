@@ -9,8 +9,13 @@ import Foundation
 import UIKit
 
 struct ImageLoader {
+    
+//MARK: -Properties
+    
     let queueForLoad = DispatchQueue.global(qos: .utility)
     let session = URLSession(configuration: .default)
+
+//MARK: -Methods
     
     func loadImage(from url: URL,onLoadWasCompleted: @escaping (Result<UIImage,Error>)->Void) {
         session.dataTask(with: url) { data, _, error in

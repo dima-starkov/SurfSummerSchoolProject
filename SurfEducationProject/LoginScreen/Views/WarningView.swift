@@ -8,8 +8,12 @@
 import UIKit
 
 class WarningView: UIView {
+
+//MARK: - Properties
     
     let label = UILabel()
+    
+//MARK: -Init
 
     convenience init(text: String) {
         self.init()
@@ -28,5 +32,4 @@ class WarningView: UIView {
             label.trailingAnchor.constraint(equalTo: trailingAnchor)
         ])
     }
-
 }

@@ -9,13 +9,16 @@ import UIKit
 
 class DetailImageTableViewCell: UITableViewCell {
     
-    //MARK: - Views
+//MARK: - Views
     @IBOutlet private weak var DetailImage: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         configureAppearance()
     }
+    
+    
+//MARK: - Methods
     
     func cofigure(with model: DetailItemModel) {
         guard let loadURL = URL(string: model.imageURL) else { return }

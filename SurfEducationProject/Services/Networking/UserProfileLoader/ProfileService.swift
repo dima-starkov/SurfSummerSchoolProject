@@ -13,6 +13,8 @@ class ProfileService {
     
     static let shared = ProfileService()
     
+    let userKey = "UserData"
+    
     var userProfileModel: UserModel?
     var userDefaults = UserDefaults.standard
     
@@ -41,7 +43,7 @@ class ProfileService {
     }
     
     func getUserDataFromUserDefaults() {
-        guard let data = userDefaults.value(forKey: "userData") else { return }
+        guard let data = userDefaults.value(forKey: userKey) else { return }
         do {
             let model = try JSONDecoder().decode(UserModel.self, from: data as! Data)
             self.userProfileModel = model
@@ -50,13 +52,18 @@ class ProfileService {
         }
     }
     
+    func removeUserData() {
+        userDefaults.set(nil, forKey: userKey)
+    }
+    
+//MARK: - Private Methods
+    
     private func saveToUserDefailts(model:UserModel){
         do {
             let data = try JSONEncoder().encode(model)
-            userDefaults.set(data, forKey: "userData")
+            userDefaults.set(data, forKey: userKey)
         } catch {
             print(error)
         }
-            
     }
 }

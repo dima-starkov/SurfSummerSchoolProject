@@ -9,13 +9,19 @@ import UIKit
 
 class OneLineTextField: UITextField {
     
+//MARK: - Views
+    
     let bottomView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: 0, height: 1))
+    
+//MARK: - Properties
     
     var bottomViewColor: UIColor = .lightGray {
         didSet {
             bottomView.backgroundColor = bottomViewColor
         }
     }
+    
+//MARK: -Init
     
     convenience init(font: UIFont) {
         self.init()
@@ -34,5 +40,4 @@ class OneLineTextField: UITextField {
             bottomView.heightAnchor.constraint(equalToConstant: 1)
         ])
     }
-
 }

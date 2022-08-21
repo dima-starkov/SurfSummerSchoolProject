@@ -9,7 +9,7 @@ import Foundation
 
 struct BaseTokenStorage: TokenStorage {
     
-    //MARK: - Nested Types
+//MARK: - Nested Types
     
     private enum Constants {
         static let applicationNameInKeyChain = "com.surf.education.project"
@@ -17,15 +17,14 @@ struct BaseTokenStorage: TokenStorage {
         static let tokenDateKey = "tokenDate"
     }
     
-    //MARK: - Private property
+//MARK: - Private property
     private var unprotectedStorage: UserDefaults {
         UserDefaults.standard
     }
     
-    //MARK: - Token Storage
+//MARK: - Token Storage
     
     func getToken() throws -> TokenContainer {
-        
         let queryDictionaryForSavingToken: [CFString: AnyObject] = [
             kSecAttrService: Constants.applicationNameInKeyChain as AnyObject,
             kSecAttrAccount: Constants.tokenKey as AnyObject,
@@ -113,7 +112,4 @@ extension BaseTokenStorage {
             throw Error.keyIsAlreadyInKeyChain
         }
     }
-    
-    
-    
 }

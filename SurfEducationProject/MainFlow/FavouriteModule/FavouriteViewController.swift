@@ -7,7 +7,7 @@
 
 import UIKit
 
-class FavouriteViewController: UIViewController {
+final class FavouriteViewController: UIViewController {
     
     //MARK: - Views
     

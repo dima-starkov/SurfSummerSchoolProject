@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController {
+final class ProfileViewController: UIViewController {
     
 //MARK: -Views
     
@@ -19,6 +19,11 @@ class ProfileViewController: UIViewController {
 //MARK: - Properties
 
     var userModel: UserModel?
+    
+    var topbarHeight: CGFloat {
+            return (view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0.0) +
+                (self.navigationController?.navigationBar.frame.height ?? 0.0)
+        }
     
 //MARK: - ViewContoller
     
@@ -38,7 +43,7 @@ class ProfileViewController: UIViewController {
         LogOutService().logOut { [weak self] isSuccess in
             if isSuccess{
                 DispatchQueue.main.async {
-                    let vc = LoginViewController()
+                    let vc = UINavigationController(rootViewController: LoginViewController())
                     vc.modalPresentationStyle = .fullScreen
                     self?.present(vc, animated: true)
                 }
@@ -76,6 +81,8 @@ private extension ProfileViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
+        tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: topbarHeight + 16).isActive = true //переопределил чтобы во время анимации warningView tableView не уезжала вместе с navigationBar
+        
         tableView.register(UINib(nibName: "\(AvatarAndNameTableViewCell.self)", bundle: .main),
                            forCellReuseIdentifier: "\(AvatarAndNameTableViewCell.self)")
         tableView.register(UINib(nibName: "\(DescriptionTableViewCell.self)", bundle: .main),
@@ -109,17 +116,19 @@ private extension ProfileViewController {
     }
     
     func showWarningView() {
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
         UIView.animate(withDuration: 0.7) {
-                self.warningView.center.y += 93
-                self.view.layoutIfNeeded()
+            self.warningView.center.y += self.topbarHeight
+            self.view.layoutIfNeeded()
         }
-            }
+    }
     
     func hideWarningView() {
-        UIView.animate(withDuration: 0.7,delay: 2) {
-                self.warningView.center.y -= 93
-                self.view.layoutIfNeeded()
-            
+        UIView.animate(withDuration: 0.7, delay: 2) {
+            self.warningView.center.y -= self.topbarHeight
+            self.view.layoutIfNeeded()
+        } completion: { _ in
+            self.navigationController?.setNavigationBarHidden(false, animated: true)
         }
     }
     

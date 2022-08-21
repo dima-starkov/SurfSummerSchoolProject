@@ -18,6 +18,13 @@ class LoginViewController: UIViewController {
     let isEmptyPassword = UITextField()
     let warningView = WarningView(text: "Логин или пароль введен неправильно")
     
+//MARK: -Properties:
+    
+    var topbarHeight: CGFloat {
+            return (view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0.0) +
+                (self.navigationController?.navigationBar.frame.height ?? 0.0)
+        }
+    
 //MARK: -UIViewContoller
 
     override func viewDidLoad() {
@@ -34,6 +41,8 @@ class LoginViewController: UIViewController {
     }
     
 }
+
+//MARK: - Private Methods
 
 private extension LoginViewController {
     func configureAppearance() {
@@ -95,6 +104,7 @@ private extension LoginViewController {
     
     func confugureWarningView() {
         view.addSubview(warningView)
+        warningView.isHidden = true
         warningView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             warningView.bottomAnchor.constraint(equalTo: view.topAnchor),
@@ -105,17 +115,20 @@ private extension LoginViewController {
     }
     
     func showWarningView() {
+        warningView.isHidden = false
+        navigationController?.setNavigationBarHidden(true, animated: true)
         UIView.animate(withDuration: 0.7) {
-                self.warningView.center.y += 93
+            self.warningView.center.y += self.topbarHeight
                 self.view.layoutIfNeeded()
         }
             }
     
     func hideWarningView() {
-        UIView.animate(withDuration: 0.7,delay: 2) {
-                self.warningView.center.y -= 93
-                self.view.layoutIfNeeded()
-            
+        UIView.animate(withDuration: 0.7, delay: 2) {
+            self.warningView.center.y -= self.topbarHeight
+            self.view.layoutIfNeeded()
+        } completion: { _ in
+            self.navigationController?.setNavigationBarHidden(false, animated: true)
         }
     }
     

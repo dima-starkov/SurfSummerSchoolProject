@@ -9,7 +9,7 @@ import Foundation
 
 struct BaseNetworkTask<AbstractInput:Encodable,AbstractOutput:Decodable>: NetworkTask {
     
-    //MARK: -NetworkTask
+//MARK: -NetworkTask
     
     typealias Input = AbstractInput
     typealias Output = AbstractOutput
@@ -22,6 +22,7 @@ struct BaseNetworkTask<AbstractInput:Encodable,AbstractOutput:Decodable>: Networ
     let method: NetworkMethod
     let session: URLSession = URLSession(configuration: .default)
     let isNeedInjectToken: Bool
+    let islogOut: Bool
     
     var urlCache: URLCache {
         .shared
@@ -30,15 +31,16 @@ struct BaseNetworkTask<AbstractInput:Encodable,AbstractOutput:Decodable>: Networ
     var tokenStorage = BaseTokenStorage()
     
     
-    //MARK: -init
+//MARK: -init
     
-    init(isNeedInjectToken: Bool, method: NetworkMethod, path: String) {
+    init(isNeedInjectToken: Bool,isLogout:Bool = false, method: NetworkMethod, path: String) {
         self.path = path
         self.method = method
         self.isNeedInjectToken = isNeedInjectToken
+        self.islogOut = isLogout
     }
     
-    //MARK: -NetworkTask Methods
+//MARK: -NetworkTask Methods
     
     func performRequest(input: AbstractInput,
                         onResponceWasRecived: @escaping (Result<AbstractOutput, Error>) -> Void) {
@@ -127,6 +129,10 @@ private extension BaseNetworkTask {
         
         if isNeedInjectToken {
             request.addValue("Token \(try tokenStorage.getToken().token)", forHTTPHeaderField: "Authorization")
+        }
+        
+        if islogOut {
+            request.addValue("accept", forHTTPHeaderField: "*/*")
         }
         
         

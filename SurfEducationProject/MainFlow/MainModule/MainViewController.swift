@@ -9,7 +9,7 @@ import UIKit
 
 final class MainViewController: UIViewController {
     
-    //MARK: - Constants
+//MARK: - Constants
     
     private enum Constants {
         static let collectionViewPadding: CGFloat = 16
@@ -17,21 +17,22 @@ final class MainViewController: UIViewController {
         static let vSpaceBetweenItems: CGFloat = 8
     }
     
-    //MARK: - Events
+//MARK: - Events
 
-    //MARK: - Properties
+//MARK: - Properties
     
     var model: DetailItemDataModel = .init()
     var favoriteStorage = FavoriteStorage.shared
     
-    //MARK: - Views
+//MARK: - Views
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     let loadErrorView = PostLoadErrorView()
+    let refresh = UIRefreshControl()
     
-    //MARK: -UIViewController
+//MARK: -UIViewController
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -95,12 +96,21 @@ private extension MainViewController {
         collectionView.dataSource = self
         collectionView.register(UINib(nibName: "\(MainItemCollectionViewCell.self)", bundle: .main), forCellWithReuseIdentifier: "\(MainItemCollectionViewCell.self)")
         collectionView.contentInset = .init(top: 8, left: 16, bottom: 8, right: 16)
+        collectionView.refreshControl = refresh
+        refresh.addTarget(self, action: #selector(reloadData), for: .valueChanged)
+    }
+    
+    @objc func reloadData() {
+        collectionView.refreshControl?.beginRefreshing()
+        loadPosts()
+        collectionView.reloadData()
+        collectionView.refreshControl?.endRefreshing()
     }
     
     func confugureModel() {
         model.didItemsUpdate = { [weak self] in
             guard let self = self else { return }
-            DispatchQueue.main.sync {
+            DispatchQueue.main.async {
                 self.collectionView.reloadData()
                 self.activityIndicator.stopAnimating()
                 self.activityIndicator.isHidden = true
@@ -134,7 +144,7 @@ private extension MainViewController {
 
 extension MainViewController: UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout {
     
-    //MARK: - collectionView delegate
+//MARK: - CollectionView delegate
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return model.items.count
@@ -155,7 +165,7 @@ extension MainViewController: UICollectionViewDataSource,UICollectionViewDelegat
         navigationController?.pushViewController(vc, animated: true)
     }
     
-    //MARK: - collectionView layout
+//MARK: - CollectionView layout
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
            let itemWidth = (view.frame.width - Constants.collectionViewPadding * 2 - Constants.hSpaceBetweenItems) / 2
