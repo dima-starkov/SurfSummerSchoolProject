@@ -11,6 +11,7 @@ final class ProfileViewController: UIViewController {
     
 //MARK: -Views
     
+    @IBOutlet weak var topAnchorTable: NSLayoutConstraint!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var exitButton: UIButton!
     
@@ -20,16 +21,21 @@ final class ProfileViewController: UIViewController {
 
     var userModel: UserModel?
     
-    var topbarHeight: CGFloat {
-            return (view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0.0) +
-                (self.navigationController?.navigationBar.frame.height ?? 0.0)
+    var topBarHeight: CGFloat {
+            var top = self.navigationController?.navigationBar.frame.height ?? 0.0
+            if #available(iOS 13.0, *) {
+                top += UIApplication.shared.windows.first?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
+            } else {
+                top += UIApplication.shared.statusBarFrame.height
+            }
+            return top
         }
     
 //MARK: - ViewContoller
     
     override func viewDidLoad() {
         super.viewDidLoad()
-      
+      print(topBarHeight)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -86,7 +92,8 @@ private extension ProfileViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
-        tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: topbarHeight + 16).isActive = true //переопределил, чтобы во время анимации warningView tableView не уезжала вместе с navigationBar
+        topAnchorTable.constant = topBarHeight
+        //переопределил, чтобы во время анимации warningView tableView не уезжала вместе с navigationBar
         
         tableView.register(UINib(nibName: "\(AvatarAndNameTableViewCell.self)", bundle: .main),
                            forCellReuseIdentifier: "\(AvatarAndNameTableViewCell.self)")
@@ -123,14 +130,14 @@ private extension ProfileViewController {
     func showWarningView() {
         self.navigationController?.setNavigationBarHidden(true, animated: true)
         UIView.animate(withDuration: 0.7) {
-            self.warningView.center.y += self.topbarHeight
+            self.warningView.center.y += self.topBarHeight
             self.view.layoutIfNeeded()
         }
     }
     
     func hideWarningView() {
         UIView.animate(withDuration: 0.7, delay: 2) {
-            self.warningView.center.y -= self.topbarHeight
+            self.warningView.center.y -= self.topBarHeight
             self.view.layoutIfNeeded()
         } completion: { _ in
             self.navigationController?.setNavigationBarHidden(false, animated: true)
