@@ -26,7 +26,7 @@
                         <constraint firstAttribute="height" constant="48" id="ERJ-ua-2uh"/>
                     </constraints>
                     <state key="normal" title="Button"/>
-                    <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                    <buttonConfiguration key="configuration" style="plain"/>
                     <connections>
                         <action selector="logOutOfProfile:" destination="-1" eventType="touchUpInside" id="hKJ-Yq-HVI"/>
                     </connections>

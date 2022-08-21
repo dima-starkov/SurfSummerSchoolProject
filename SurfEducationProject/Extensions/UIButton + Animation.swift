@@ -35,5 +35,4 @@ extension UIButton {
         self.imageView?.layer.removeAnimation(forKey: "rotationAnimation")
         self.setImage(nil, for: .normal)
     }
-    
 }

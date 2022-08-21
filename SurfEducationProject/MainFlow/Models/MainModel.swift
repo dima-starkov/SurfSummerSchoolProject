@@ -9,16 +9,16 @@ import Foundation
 
 final class DetailItemDataModel{
     
-    //MARK: - Events
+//MARK: - Events
     var didItemsUpdate: (()->Void)?
     var didItemsUpdateWithError: ((Error)->Void)?
     
-    //MARK: - Properties
+//MARK: - Properties
     let pictureService = PictureService()
     var items: [DetailItemModel] = []
     let favoriteStorage = FavoriteStorage.shared
     
-    //MARK: - Methods
+//MARK: - Methods
     func getDefaultPosts() {
         items = Array(repeating: DetailItemModel.createDefault(), count: 20)
         didItemsUpdate?()
@@ -41,6 +41,8 @@ final class DetailItemDataModel{
                 }
             }
         }
+    
+//MARK: -Private methods
     
     private func toFillFavoriteItems() {
         for item in items {

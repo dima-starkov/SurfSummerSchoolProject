@@ -18,6 +18,7 @@ struct LogOutService {
                     try dataTask.tokenStorage.removeTokenFromContainer()
                     URLCache.shared.removeAllCachedResponses()
                     ProfileService.shared.removeUserData()
+                    FavoriteStorage.shared.removeAllItems()
                     completion(true)
                 } catch {
                     print(error)

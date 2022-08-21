@@ -71,7 +71,7 @@ private extension ProfileViewController {
     func configureAppearance() {
         configureTableView()
         configureExitButton()
-        configureNavigationBar()
+        configureNavigationBar(title: "Профиль")
         confugureWarningView()
         userModel = ProfileService.shared.userProfileModel
     }
@@ -95,23 +95,10 @@ private extension ProfileViewController {
         tableView.isScrollEnabled = false
     }
     
-    func configureNavigationBar() {
-        navigationItem.title = "Профиль"
-        let searchButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(didTapSearchButton))
-        searchButton.tintColor = .standartBlack()
-        navigationItem.rightBarButtonItem = searchButton
-    }
-    
-    @objc private func didTapSearchButton() {
-        let vc = SearchViewController()
-        vc.modalPresentationStyle = .fullScreen
-        navigationController?.pushViewController(vc, animated: true)
-    }
-    
     func presentAlert() {
         let alert = UIAlertController(title: "Внимание", message: "Вы точно хотите выйти из приложения?", preferredStyle: .alert)
         let outAction = UIAlertAction(title: "Да,точно", style: .default) { [weak self] _ in
-            self?.exitButton.setTitle(nil, for: .normal)
+            self?.exitButton.setTitle("Выйти из профиля", for: .normal)
             self?.exitButton.loadAnimation()
             self?.logout()
         }

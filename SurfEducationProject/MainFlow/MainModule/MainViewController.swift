@@ -66,31 +66,17 @@ private extension MainViewController {
                 }
             } else {
                 DispatchQueue.main.async {
-                self?.presentLoadErrorView()
+                    self?.presentLoadErrorView()
                 }
             }
         }
     }
     
     func configureAppearance() {
-        configureNavigationBar()
+        configureNavigationBar(title: "Главная")
         configureCollectionView()
     }
     
-    func configureNavigationBar() {
-        navigationItem.title = "Главная"
-        let searchButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(didTapSearchButton))
-        searchButton.tintColor = .standartBlack()
-        navigationItem.rightBarButtonItem = searchButton
-    }
-    
-    @objc private func didTapSearchButton() {
-        let vc = SearchViewController()
-        vc.modalPresentationStyle = .fullScreen
-        navigationController?.pushViewController(vc, animated: true)
-    }
-    
-   
     func configureCollectionView() {
         collectionView.delegate = self
         collectionView.dataSource = self

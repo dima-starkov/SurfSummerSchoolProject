@@ -9,15 +9,15 @@ import UIKit
 
 final class FavouriteViewController: UIViewController {
     
-    //MARK: - Views
+//MARK: - Views
     
     let tableView = UITableView()
     
-    //MARK: - Properties
+//MARK: - Properties
     
     var model = [DetailItemModel]()
     
-    //MARK: - UIViewController
+//MARK: - UIViewController
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +28,7 @@ final class FavouriteViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         configureAppearance()
-        configureNavigationBar()
+        configureNavigationBar(title: "Избранное")
         confugureModel()
     }
    
@@ -64,21 +64,6 @@ private extension FavouriteViewController {
                            forCellReuseIdentifier: "\(DetailTitleTableViewCell.self)")
         tableView.register(UINib(nibName: "\(FavoriteDetailTextTableViewCell.self)", bundle: .main),
                            forCellReuseIdentifier: "\(FavoriteDetailTextTableViewCell.self)")
-    }
-    
-    
-    
-    func configureNavigationBar() {
-        navigationItem.title = "Избранное"
-        let searchButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(didTapSearchButton))
-        searchButton.tintColor = .standartBlack()
-        navigationItem.rightBarButtonItem = searchButton
-    }
-    
-    @objc private func didTapSearchButton() {
-        let vc = SearchViewController()
-        vc.modalPresentationStyle = .fullScreen
-        navigationController?.pushViewController(vc, animated: true)
     }
     
     func confugureModel() {

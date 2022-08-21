@@ -37,6 +37,12 @@ class FavoriteStorage {
     func isKeyPresentInUserDefaults(key: String) -> Bool {
         return UserDefaults.standard.object(forKey: key) != nil
     }
+    func removeAllItems() {
+        for favoritesItem in favoritesItems {
+            removeItemFromUserDefaults(item: favoritesItem)
+        }
+        favoritesItems.removeAll()
+    }
     
 //MARK: - Private Methods
     
