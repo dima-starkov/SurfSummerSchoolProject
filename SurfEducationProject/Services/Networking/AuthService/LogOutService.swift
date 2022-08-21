@@ -7,7 +7,7 @@
 
 import Foundation
 struct LogOutService {
-    let dataTask = BaseNetworkTask<EmptyModel,EmptyModel>( isNeedInjectToken: false,  
+    let dataTask = BaseNetworkTask<EmptyModel,EmptyModel>( isNeedInjectToken: false,
                                                            method: .post,
                                                            path: "/auth/logout")
     func logOut(completion: @escaping (Bool)-> Void) {

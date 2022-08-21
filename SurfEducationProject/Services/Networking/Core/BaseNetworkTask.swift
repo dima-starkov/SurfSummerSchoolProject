@@ -120,7 +120,8 @@ private extension BaseNetworkTask {
             request = URLRequest(url: newURl)
         case .post:
             request = URLRequest(url: url)
-            request.httpBody = try getParametersForBody(from: parameters)
+            if !islogOut {
+                request.httpBody = try getParametersForBody(from: parameters) }
         }
         
         request.httpMethod = method.method
@@ -134,7 +135,6 @@ private extension BaseNetworkTask {
         if islogOut {
             request.addValue("accept", forHTTPHeaderField: "*/*")
         }
-        
         
         return request
     }

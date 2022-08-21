@@ -98,8 +98,8 @@ private extension ProfileViewController {
     func presentAlert() {
         let alert = UIAlertController(title: "Внимание", message: "Вы точно хотите выйти из приложения?", preferredStyle: .alert)
         let outAction = UIAlertAction(title: "Да,точно", style: .default) { [weak self] _ in
-            self?.exitButton.setTitle("Выйти из профиля", for: .normal)
             self?.exitButton.loadAnimation()
+            self?.exitButton.setTitle(nil, for: .selected)
             self?.logout()
         }
         let cancelAction = UIAlertAction(title: "Нет", style: .cancel)
