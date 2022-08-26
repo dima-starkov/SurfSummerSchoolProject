@@ -10,6 +10,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProfileViewController" customModule="SurfEducationProject" customModuleProvider="target">
             <connections>
+                <outlet property="exitButton" destination="oge-tc-EKU" id="SHq-hv-Sav"/>
+                <outlet property="tableView" destination="PiG-TR-8HO" id="7Gh-7d-O2w"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -17,9 +19,35 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oge-tc-EKU">
+                    <rect key="frame" x="16" y="798" width="382" height="48"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="48" id="ERJ-ua-2uh"/>
+                    </constraints>
+                    <state key="normal" title="Button"/>
+                    <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                    <connections>
+                        <action selector="logOutOfProfile:" destination="-1" eventType="touchUpInside" id="hKJ-Yq-HVI"/>
+                    </connections>
+                </button>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="PiG-TR-8HO">
+                    <rect key="frame" x="0.0" y="44" width="414" height="754"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                </tableView>
+            </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-            <point key="canvasLocation" x="139" y="95"/>
+            <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="oge-tc-EKU" secondAttribute="trailing" constant="16" id="2yx-uZ-gWJ"/>
+                <constraint firstItem="PiG-TR-8HO" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="IP8-HI-J31"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="PiG-TR-8HO" secondAttribute="trailing" id="c1u-gj-OIr"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="oge-tc-EKU" secondAttribute="bottom" constant="16" id="lm3-GX-4Fi"/>
+                <constraint firstItem="PiG-TR-8HO" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="qWn-NO-563"/>
+                <constraint firstItem="oge-tc-EKU" firstAttribute="top" secondItem="PiG-TR-8HO" secondAttribute="bottom" id="qui-lL-jbx"/>
+                <constraint firstItem="oge-tc-EKU" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="yKg-wr-s7E"/>
+            </constraints>
+            <point key="canvasLocation" x="137.68115942028987" y="94.419642857142847"/>
         </view>
     </objects>
     <resources>
