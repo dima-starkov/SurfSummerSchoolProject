@@ -13,7 +13,9 @@ final class ProfileViewController: UIViewController {
     
     @IBOutlet weak var topAnchorTable: NSLayoutConstraint!
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var exitButton: UIButton!
+    @IBOutlet weak var exitButtonView: UIView!
+    
+    let exitButton = UIButton()
     
     let warningView = WarningView(text: "Не удалось выйти, попробуйте еще раз")
     
@@ -42,13 +44,7 @@ final class ProfileViewController: UIViewController {
         super.viewWillAppear(animated)
         configureAppearance()
     }
-    
-//MARK: -Actions
 
-    @IBAction func logOutOfProfile(_ sender: UIButton) {
-       presentAlert()
-    }
-    
 }
 
 //MARK: -Private Methods
@@ -83,9 +79,24 @@ private extension ProfileViewController {
     }
     
     func configureExitButton() {
+        exitButtonView.addSubview(exitButton)
+        exitButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            exitButton.topAnchor.constraint(equalTo: exitButtonView.topAnchor),
+            exitButton.bottomAnchor.constraint(equalTo: exitButtonView.bottomAnchor),
+            exitButton.leadingAnchor.constraint(equalTo: exitButtonView.leadingAnchor),
+            exitButton.trailingAnchor.constraint(equalTo: exitButtonView.trailingAnchor)
+        ])
+        
         exitButton.backgroundColor = .standartBlack()
         exitButton.setTitleColor(.white, for: .normal)
         exitButton.setTitle("Выйти из профиля", for: .normal)
+        exitButton.addTarget(self, action: #selector(didTapExitButton), for: .touchUpInside)
+    }
+    
+    @objc func didTapExitButton() {
+        presentAlert()
     }
     
     func configureTableView() {
@@ -106,7 +117,7 @@ private extension ProfileViewController {
         let alert = UIAlertController(title: "Внимание", message: "Вы точно хотите выйти из приложения?", preferredStyle: .alert)
         let outAction = UIAlertAction(title: "Да,точно", style: .default) { [weak self] _ in
             self?.exitButton.loadAnimation()
-            self?.exitButton.setTitle(nil, for: .selected)
+            self?.exitButton.setTitle(nil, for: .normal)
             self?.logout()
         }
         let cancelAction = UIAlertAction(title: "Нет", style: .cancel)

@@ -176,14 +176,14 @@ extension LoginViewController: LoginViewProtocol {
     func showWarningView() {
         warningView.isHidden = false
         navigationController?.setNavigationBarHidden(true, animated: true)
-        UIView.animate(withDuration: 0.7) {
+        UIView.animate(withDuration: 0.5) {
             self.warningView.center.y += self.topbarHeight
                 self.view.layoutIfNeeded()
         }
             }
     
     func hideWarningView() {
-        UIView.animate(withDuration: 0.7, delay: 2) {
+        UIView.animate(withDuration: 0.5, delay: 2) {
             self.warningView.center.y -= self.topbarHeight
             self.view.layoutIfNeeded()
         } completion: { _ in
