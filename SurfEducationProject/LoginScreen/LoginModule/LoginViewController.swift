@@ -25,11 +25,13 @@ class LoginViewController: UIViewController {
                 (self.navigationController?.navigationBar.frame.height ?? 0.0)
         }
     
+    let presenter = LoginViewPresenter()
+    
 //MARK: -UIViewContoller
 
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        presenter.view = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -37,9 +39,7 @@ class LoginViewController: UIViewController {
         configureAppearance()
         view.backgroundColor = .white
         navigationItem.title = "Вход"
-        
     }
-    
 }
 
 //MARK: - Private Methods
@@ -94,7 +94,6 @@ private extension LoginViewController {
         
         isEmptyLogin.isHidden = true
         isEmptyPassword.isHidden = true
-        
     }
     
     @objc func showPassword() {
@@ -114,24 +113,6 @@ private extension LoginViewController {
         ])
     }
     
-    func showWarningView() {
-        warningView.isHidden = false
-        navigationController?.setNavigationBarHidden(true, animated: true)
-        UIView.animate(withDuration: 0.7) {
-            self.warningView.center.y += self.topbarHeight
-                self.view.layoutIfNeeded()
-        }
-            }
-    
-    func hideWarningView() {
-        UIView.animate(withDuration: 0.7, delay: 2) {
-            self.warningView.center.y -= self.topbarHeight
-            self.view.layoutIfNeeded()
-        } completion: { _ in
-            self.navigationController?.setNavigationBarHidden(false, animated: true)
-        }
-    }
-    
     func confugureButton() {
         logInButton.backgroundColor = .standartBlack()
         logInButton.setTitleColor(.white, for: .normal)
@@ -143,30 +124,7 @@ private extension LoginViewController {
         if checkLoginAndPassword() {
             logInButton.loadAnimation()
             logInButton.setTitle(nil, for: .normal)
-            logIn()
-        }
-    }
-    
-    func logIn(){
-        guard let login = loginTextField.text, let password = passwordTextField.text else { return }
-        let tempCredentials = AuthRequestModel(phone: login, password: password)
-        AuthService().performLoginRequestAndSaveToken(credentials: tempCredentials) { [weak self] result in
-            switch result {
-            case .success(let result):
-                DispatchQueue.main.async {
-                    ProfileService.shared.getUserDataModel(from: result)
-                    let vc = TabBarConfigurator().configure()
-                    vc.modalPresentationStyle = .fullScreen
-                    self?.present(vc, animated: true)
-                }
-            case .failure:
-                DispatchQueue.main.async {
-                    self?.showWarningView()
-                    self?.hideWarningView()
-                    self?.logInButton.stopLoadAnimation()
-                    self?.logInButton.setTitle("Войти", for: .normal)
-                }
-            }
+            presenter.loginUser(phone: loginTextField.text, password: passwordTextField.text)
         }
     }
     
@@ -198,5 +156,38 @@ private extension LoginViewController {
             return false
         }
         return true
+    }
+}
+
+extension LoginViewController: LoginViewProtocol {
+    func loginIsSuccesed() {
+        let vc = TabBarConfigurator().configure()
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    }
+    
+    func presentWarningView() {
+        showWarningView()
+        hideWarningView()
+        logInButton.stopLoadAnimation()
+        logInButton.setTitle("Войти", for: .normal)
+    }
+    
+    func showWarningView() {
+        warningView.isHidden = false
+        navigationController?.setNavigationBarHidden(true, animated: true)
+        UIView.animate(withDuration: 0.7) {
+            self.warningView.center.y += self.topbarHeight
+                self.view.layoutIfNeeded()
+        }
+            }
+    
+    func hideWarningView() {
+        UIView.animate(withDuration: 0.7, delay: 2) {
+            self.warningView.center.y -= self.topbarHeight
+            self.view.layoutIfNeeded()
+        } completion: { _ in
+            self.navigationController?.setNavigationBarHidden(false, animated: true)
+        }
     }
 }
