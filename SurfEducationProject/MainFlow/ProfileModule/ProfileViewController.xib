@@ -12,7 +12,6 @@
             <connections>
                 <outlet property="exitButtonView" destination="THJ-eS-WFN" id="sOc-Og-BN9"/>
                 <outlet property="tableView" destination="PiG-TR-8HO" id="7Gh-7d-O2w"/>
-                <outlet property="topAnchorTable" destination="tG0-26-gDE" id="jMi-4N-sbv"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -36,11 +35,11 @@
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
+                <constraint firstItem="PiG-TR-8HO" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" priority="250" constant="60" id="GT6-bY-zAJ"/>
                 <constraint firstItem="THJ-eS-WFN" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="J77-bp-CCc"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="THJ-eS-WFN" secondAttribute="trailing" constant="16" id="VIi-x2-jGv"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="PiG-TR-8HO" secondAttribute="trailing" id="c1u-gj-OIr"/>
                 <constraint firstItem="PiG-TR-8HO" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="qWn-NO-563"/>
-                <constraint firstItem="PiG-TR-8HO" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="60" id="tG0-26-gDE"/>
                 <constraint firstItem="THJ-eS-WFN" firstAttribute="top" secondItem="PiG-TR-8HO" secondAttribute="bottom" id="vhH-5y-eek"/>
                 <constraint firstItem="THJ-eS-WFN" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="y2k-Ud-XjR"/>
             </constraints>

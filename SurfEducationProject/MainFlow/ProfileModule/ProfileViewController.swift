@@ -11,40 +11,26 @@ final class ProfileViewController: UIViewController {
     
 //MARK: -Views
     
-    @IBOutlet weak var topAnchorTable: NSLayoutConstraint!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var exitButtonView: UIView!
-    
     let exitButton = UIButton()
-    
     let warningView = WarningView(text: "Не удалось выйти, попробуйте еще раз")
     
 //MARK: - Properties
 
     var userModel: UserModel?
     
-    var topBarHeight: CGFloat {
-            var top = self.navigationController?.navigationBar.frame.height ?? 0.0
-            if #available(iOS 13.0, *) {
-                top += UIApplication.shared.windows.first?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
-            } else {
-                top += UIApplication.shared.statusBarFrame.height
-            }
-            return top
-        }
-    
 //MARK: - ViewContoller
     
     override func viewDidLoad() {
         super.viewDidLoad()
-      print(topBarHeight)
+        print(topbarHeight)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         configureAppearance()
     }
-
 }
 
 //MARK: -Private Methods
@@ -53,18 +39,19 @@ private extension ProfileViewController {
     
     func logout() {
         LogOutService().logOut { [weak self] isSuccess in
+            guard let strongSelf = self else { return }
             if isSuccess{
                 DispatchQueue.main.async {
                     let vc = UINavigationController(rootViewController: LoginViewController())
                     vc.modalPresentationStyle = .fullScreen
-                    self?.present(vc, animated: true)
+                    strongSelf.present(vc, animated: true)
                 }
             } else {
                 DispatchQueue.main.async {
-                    self?.showWarningView()
-                    self?.hideWarningView()
-                    self?.exitButton.stopLoadAnimation()
-                    self?.exitButton.setTitle("Выйти из профиля", for: .normal)
+                    strongSelf.showWarningView(warningView: strongSelf.warningView)
+                    strongSelf.hideWarningView(warningView: strongSelf.warningView)
+                    strongSelf.exitButton.stopLoadAnimation()
+                    strongSelf.exitButton.setTitle("Выйти из профиля", for: .normal)
                 }
             }
         }
@@ -74,7 +61,7 @@ private extension ProfileViewController {
         configureTableView()
         configureExitButton()
         configureNavigationBar(title: "Профиль")
-        confugureWarningView()
+        configureWarningView(warningView: warningView)
         userModel = ProfileService.shared.userProfileModel
     }
     
@@ -103,14 +90,12 @@ private extension ProfileViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
-        topAnchorTable.constant = topBarHeight
-        //переопределил, чтобы во время анимации warningView tableView не уезжала вместе с navigationBar
-        
         tableView.register(UINib(nibName: "\(AvatarAndNameTableViewCell.self)", bundle: .main),
                            forCellReuseIdentifier: "\(AvatarAndNameTableViewCell.self)")
         tableView.register(UINib(nibName: "\(DescriptionTableViewCell.self)", bundle: .main),
                            forCellReuseIdentifier: "\(DescriptionTableViewCell.self)")
         tableView.isScrollEnabled = false
+        tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: topbarHeight).isActive = true
     }
     
     func presentAlert() {
@@ -124,35 +109,6 @@ private extension ProfileViewController {
         alert.addAction(cancelAction)
         alert.addAction(outAction)
         present(alert, animated: true)
-    }
-    
-    func confugureWarningView() {
-        view.addSubview(warningView)
-        view.bringSubviewToFront(warningView)
-        warningView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            warningView.bottomAnchor.constraint(equalTo: view.topAnchor),
-            warningView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            warningView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            warningView.heightAnchor.constraint(equalToConstant: 93)
-        ])
-    }
-    
-    func showWarningView() {
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
-        UIView.animate(withDuration: 0.7) {
-            self.warningView.center.y += self.topBarHeight
-            self.view.layoutIfNeeded()
-        }
-    }
-    
-    func hideWarningView() {
-        UIView.animate(withDuration: 0.7, delay: 2) {
-            self.warningView.center.y -= self.topBarHeight
-            self.view.layoutIfNeeded()
-        } completion: { _ in
-            self.navigationController?.setNavigationBarHidden(false, animated: true)
-        }
     }
     
 }

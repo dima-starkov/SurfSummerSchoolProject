@@ -16,14 +16,9 @@ class LoginViewController: UIViewController {
     let showOrHidePasswordButton = UIButton(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
     let isEmptyLogin = UITextField()
     let isEmptyPassword = UITextField()
-    let warningView = WarningView(text: "Логин или пароль введен неправильно")
+    let warningView = WarningView(text: "Логин или пароль введен неверно")
     
 //MARK: -Properties:
-    
-    var topbarHeight: CGFloat {
-            return (view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0.0) +
-                (self.navigationController?.navigationBar.frame.height ?? 0.0)
-        }
     
     let presenter = LoginViewPresenter()
     
@@ -49,7 +44,7 @@ private extension LoginViewController {
         confugureButton()
         configureTextFields()
         configureStackView()
-        confugureWarningView()
+        configureWarningView(warningView: warningView)
     }
     
     func configureStackView() {
@@ -99,18 +94,6 @@ private extension LoginViewController {
     @objc func showPassword() {
         passwordTextField.isSecureTextEntry = !passwordTextField.isSecureTextEntry
         passwordTextField.isSecureTextEntry ? showOrHidePasswordButton.setImage(UIImage(systemName: "eye.fill"), for: .normal) : showOrHidePasswordButton.setImage(UIImage(systemName: "eye.slash.fill"), for: .normal)
-    }
-    
-    func confugureWarningView() {
-        view.addSubview(warningView)
-        warningView.isHidden = true
-        warningView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            warningView.bottomAnchor.constraint(equalTo: view.topAnchor),
-            warningView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            warningView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            warningView.heightAnchor.constraint(equalToConstant: 93)
-        ])
     }
     
     func confugureButton() {
@@ -167,27 +150,10 @@ extension LoginViewController: LoginViewProtocol {
     }
     
     func presentWarningView() {
-        showWarningView()
-        hideWarningView()
+        showWarningView(warningView: warningView)
+        hideWarningView(warningView: warningView)
         logInButton.stopLoadAnimation()
         logInButton.setTitle("Войти", for: .normal)
     }
     
-    func showWarningView() {
-        warningView.isHidden = false
-        navigationController?.setNavigationBarHidden(true, animated: true)
-        UIView.animate(withDuration: 0.5) {
-            self.warningView.center.y += self.topbarHeight
-                self.view.layoutIfNeeded()
-        }
-            }
-    
-    func hideWarningView() {
-        UIView.animate(withDuration: 0.5, delay: 2) {
-            self.warningView.center.y -= self.topbarHeight
-            self.view.layoutIfNeeded()
-        } completion: { _ in
-            self.navigationController?.setNavigationBarHidden(false, animated: true)
-        }
-    }
 }
