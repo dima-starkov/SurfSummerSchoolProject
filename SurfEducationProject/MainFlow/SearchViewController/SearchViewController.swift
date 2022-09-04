@@ -172,7 +172,6 @@ extension SearchViewController: UISearchBarDelegate {
                 strongSelf.searchBarIsEmptyView.isHidden = true
                 strongSelf.collectionView.isHidden = false
                 strongSelf.collectionView.reloadData()
-                print(strongSelf.filteredData[0])
                 }
             })
         }
@@ -181,10 +180,6 @@ extension SearchViewController: UISearchBarDelegate {
     private func checkSearchText(item: DetailItemModel, searchText: String) -> Bool{
         return item.title.lowercased().contains(searchText.lowercased())
     }
-    
-    
 }
 
-extension SearchViewController: UIGestureRecognizerDelegate {
-    
-}
+extension SearchViewController: UIGestureRecognizerDelegate { }

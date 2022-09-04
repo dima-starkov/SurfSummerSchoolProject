@@ -62,6 +62,7 @@ private extension DetailViewController {
         tableView.register(UINib(nibName: "\(DetailTextTableViewCell.self)", bundle: .main),
                            forCellReuseIdentifier: "\(DetailTextTableViewCell.self)")
     }
+    
     func configureNavigationController() {
         guard let name = model?.title else { return}
         configureNavigationBar(title: name)

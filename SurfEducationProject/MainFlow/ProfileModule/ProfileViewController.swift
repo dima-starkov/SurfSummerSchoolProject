@@ -17,14 +17,15 @@ final class ProfileViewController: UIViewController {
     let warningView = WarningView(text: "Не удалось выйти, попробуйте еще раз")
     
 //MARK: - Properties
-
     var userModel: UserModel?
+    let presenter = ProfilePresenter()
     
 //MARK: - ViewContoller
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(topbarHeight)
+        presenter.view = self
+        userModel = presenter.getUserData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -37,32 +38,11 @@ final class ProfileViewController: UIViewController {
 
 private extension ProfileViewController {
     
-    func logout() {
-        LogOutService().logOut { [weak self] isSuccess in
-            guard let strongSelf = self else { return }
-            if isSuccess{
-                DispatchQueue.main.async {
-                    let vc = UINavigationController(rootViewController: LoginViewController())
-                    vc.modalPresentationStyle = .fullScreen
-                    strongSelf.present(vc, animated: true)
-                }
-            } else {
-                DispatchQueue.main.async {
-                    strongSelf.showWarningView(warningView: strongSelf.warningView)
-                    strongSelf.hideWarningView(warningView: strongSelf.warningView)
-                    strongSelf.exitButton.stopLoadAnimation()
-                    strongSelf.exitButton.setTitle("Выйти из профиля", for: .normal)
-                }
-            }
-        }
-    }
-    
     func configureAppearance() {
         configureTableView()
         configureExitButton()
         configureNavigationBar(title: "Профиль")
         configureWarningView(warningView: warningView)
-        userModel = ProfileService.shared.userProfileModel
     }
     
     func configureExitButton() {
@@ -103,14 +83,13 @@ private extension ProfileViewController {
         let outAction = UIAlertAction(title: "Да,точно", style: .default) { [weak self] _ in
             self?.exitButton.loadAnimation()
             self?.exitButton.setTitle(nil, for: .normal)
-            self?.logout()
+            self?.presenter.logout()
         }
         let cancelAction = UIAlertAction(title: "Нет", style: .cancel)
         alert.addAction(cancelAction)
         alert.addAction(outAction)
         present(alert, animated: true)
     }
-    
 }
 
 //MARK: - UTableViewDelegate
@@ -152,5 +131,19 @@ extension ProfileViewController: UITableViewDelegate,UITableViewDataSource {
             return UITableViewCell()
         }
         return UITableViewCell()
+    }
+}
+
+extension ProfileViewController: ProfileViewProtocol {
+    func presentWarning() {
+        showWarningView(warningView: warningView)
+        hideWarningView(warningView: warningView)
+        exitButton.stopLoadAnimation()
+        exitButton.setTitle("Выйти из профиля", for: .normal)
+    }
+    func presentLoginVC() {
+        let vc = UINavigationController(rootViewController: LoginViewController())
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
     }
 }
